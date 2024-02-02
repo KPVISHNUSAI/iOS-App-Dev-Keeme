@@ -101,6 +101,7 @@
 		0F1001F02B6CA47E0050906E /* iOS App Dev Keeme */ = {
 			isa = PBXGroup;
 			children = (
+				0F1002472B6CE28D0050906E /* Models */,
 				0F1001FF2B6CA4C30050906E /* App */,
 				0F1002002B6CA5570050906E /* Core */,
 				0F1002032B6CA5B40050906E /* Utils */,
@@ -225,6 +226,13 @@
 				0F1002102B6CA7980050906E /* FavouritesHeading.swift */,
 			);
 			path = Favourites;
+			sourceTree = "<group>";
+		};
+		0F1002472B6CE28D0050906E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

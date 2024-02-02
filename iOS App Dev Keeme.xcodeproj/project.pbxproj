@@ -36,7 +36,6 @@
 		0F10023A2B6CA9AF0050906E /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = 0F1002392B6CA9AF0050906E /* SwiftUIIntrospect */; };
 		0F10023C2B6CA9AF0050906E /* SwiftUIIntrospect-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 0F10023B2B6CA9AF0050906E /* SwiftUIIntrospect-Dynamic */; };
 		0F10023E2B6CA9AF0050906E /* SwiftUIIntrospect-Static in Frameworks */ = {isa = PBXBuildFile; productRef = 0F10023D2B6CA9AF0050906E /* SwiftUIIntrospect-Static */; };
-		0F1002402B6CAE8B0050906E /* new.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F10023F2B6CAE8B0050906E /* new.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,7 +66,6 @@
 		0F1002322B6CA94D0050906E /* LoginPageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginPageModel.swift; sourceTree = "<group>"; };
 		0F1002342B6CA95F0050906E /* KeemeSpaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeemeSpaceView.swift; sourceTree = "<group>"; };
 		0F1002362B6CA9650050906E /* cc.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = cc.gif; sourceTree = "<group>"; };
-		0F10023F2B6CAE8B0050906E /* new.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = new.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,7 +161,6 @@
 		0F1002032B6CA5B40050906E /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				0F10023F2B6CAE8B0050906E /* new.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -331,7 +328,6 @@
 				0F1001F42B6CA47E0050906E /* ContentView.swift in Sources */,
 				0F10021B2B6CA8A50050906E /* UserProfile.swift in Sources */,
 				0F10022D2B6CA9300050906E /* CustomCorners.swift in Sources */,
-				0F1002402B6CAE8B0050906E /* new.swift in Sources */,
 				0F1001F22B6CA47E0050906E /* iOS_App_Dev_KeemeApp.swift in Sources */,
 				0F1002292B6CA8E90050906E /* PieData.swift in Sources */,
 				0F1002192B6CA8930050906E /* SettingsView.swift in Sources */,

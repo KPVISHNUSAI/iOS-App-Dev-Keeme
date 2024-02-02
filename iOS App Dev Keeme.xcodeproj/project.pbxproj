@@ -37,6 +37,7 @@
 		0F10023C2B6CA9AF0050906E /* SwiftUIIntrospect-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 0F10023B2B6CA9AF0050906E /* SwiftUIIntrospect-Dynamic */; };
 		0F10023E2B6CA9AF0050906E /* SwiftUIIntrospect-Static in Frameworks */ = {isa = PBXBuildFile; productRef = 0F10023D2B6CA9AF0050906E /* SwiftUIIntrospect-Static */; };
 		0F1002492B6CE3DF0050906E /* UserK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1002482B6CE3DF0050906E /* UserK.swift */; };
+		0F59C1DF2B6D59E900C5BE68 /* DataSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F59C1DE2B6D59E900C5BE68 /* DataSchema.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +69,7 @@
 		0F1002342B6CA95F0050906E /* KeemeSpaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeemeSpaceView.swift; sourceTree = "<group>"; };
 		0F1002362B6CA9650050906E /* cc.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = cc.gif; sourceTree = "<group>"; };
 		0F1002482B6CE3DF0050906E /* UserK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserK.swift; sourceTree = "<group>"; };
+		0F59C1DE2B6D59E900C5BE68 /* DataSchema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSchema.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +237,7 @@
 			isa = PBXGroup;
 			children = (
 				0F1002482B6CE3DF0050906E /* UserK.swift */,
+				0F59C1DE2B6D59E900C5BE68 /* DataSchema.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -349,6 +352,7 @@
 				0F10020D2B6CA7380050906E /* MainTabView.swift in Sources */,
 				0F1002212B6CA8CC0050906E /* Listings.swift in Sources */,
 				0F1002112B6CA7980050906E /* FavouritesHeading.swift in Sources */,
+				0F59C1DF2B6D59E900C5BE68 /* DataSchema.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

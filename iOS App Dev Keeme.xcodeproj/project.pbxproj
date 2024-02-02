@@ -103,8 +103,6 @@
 			children = (
 				0F1001FF2B6CA4C30050906E /* App */,
 				0F1002002B6CA5570050906E /* Core */,
-				0F1002012B6CA57F0050906E /* Extensions */,
-				0F1002022B6CA5A30050906E /* Models */,
 				0F1002032B6CA5B40050906E /* Utils */,
 				0F1001F32B6CA47E0050906E /* ContentView.swift */,
 				0F1001F52B6CA47F0050906E /* Assets.xcassets */,
@@ -142,20 +140,6 @@
 				0F1002092B6CA65C0050906E /* TabView */,
 			);
 			path = Core;
-			sourceTree = "<group>";
-		};
-		0F1002012B6CA57F0050906E /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		0F1002022B6CA5A30050906E /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		0F1002032B6CA5B40050906E /* Utils */ = {

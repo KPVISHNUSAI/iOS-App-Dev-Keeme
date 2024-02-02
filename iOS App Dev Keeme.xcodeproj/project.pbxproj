@@ -37,6 +37,8 @@
 		0F10023C2B6CA9AF0050906E /* SwiftUIIntrospect-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 0F10023B2B6CA9AF0050906E /* SwiftUIIntrospect-Dynamic */; };
 		0F10023E2B6CA9AF0050906E /* SwiftUIIntrospect-Static in Frameworks */ = {isa = PBXBuildFile; productRef = 0F10023D2B6CA9AF0050906E /* SwiftUIIntrospect-Static */; };
 		0F1002402B6CAE8B0050906E /* new.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F10023F2B6CAE8B0050906E /* new.swift */; };
+		0F1002422B6CBD360050906E /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1002412B6CBD360050906E /* DataModel.swift */; };
+		0F1002442B6CBD500050906E /* Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1002432B6CBD500050906E /* Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +70,8 @@
 		0F1002342B6CA95F0050906E /* KeemeSpaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeemeSpaceView.swift; sourceTree = "<group>"; };
 		0F1002362B6CA9650050906E /* cc.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = cc.gif; sourceTree = "<group>"; };
 		0F10023F2B6CAE8B0050906E /* new.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = new.swift; sourceTree = "<group>"; };
+		0F1002412B6CBD360050906E /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		0F1002432B6CBD500050906E /* Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +153,7 @@
 		0F1002012B6CA57F0050906E /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				0F1002432B6CBD500050906E /* Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -156,6 +161,7 @@
 		0F1002022B6CA5A30050906E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				0F1002412B6CBD360050906E /* DataModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -330,6 +336,8 @@
 				0F1002252B6CA8DA0050906E /* BuddyView.swift in Sources */,
 				0F1001F42B6CA47E0050906E /* ContentView.swift in Sources */,
 				0F10021B2B6CA8A50050906E /* UserProfile.swift in Sources */,
+				0F1002442B6CBD500050906E /* Ext.swift in Sources */,
+				0F1002422B6CBD360050906E /* DataModel.swift in Sources */,
 				0F10022D2B6CA9300050906E /* CustomCorners.swift in Sources */,
 				0F1002402B6CAE8B0050906E /* new.swift in Sources */,
 				0F1001F22B6CA47E0050906E /* iOS_App_Dev_KeemeApp.swift in Sources */,

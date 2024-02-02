@@ -13,6 +13,7 @@ struct iOS_App_Dev_KeemeApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-        }
+        }.modelContainer(for: User.self)
+        .modelContainer(for: KeemeSpace.self)
     }
 }

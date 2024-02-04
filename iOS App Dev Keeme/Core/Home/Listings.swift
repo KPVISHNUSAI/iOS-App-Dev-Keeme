@@ -2,7 +2,7 @@ import SwiftUI
 
 struct Listings: View {
     let listing: Listing
-    
+    //var list:User
     var body: some View {
         VStack(spacing: -50) {
             HStack {

@@ -1,5 +1,6 @@
 
 import SwiftUI
+import SwiftData
 
 struct ScheduleData: Codable {
     let myTask: String
@@ -18,7 +19,11 @@ struct ArrangeSchedule: View {
     @State private var partnerType: String = "Favourites"
     @State private var isHovered = false
     @State private var minimumDate: Date = Date()
-
+    
+    @Environment(\.modelContext) private var context
+    @Query(sort: \Meeting.startTime) private var meetings: [Meeting]
+    @Environment(\.dismiss) var dismiss
+    
     let hours = Array(0...24)
     let minutes = Array(0...59)
 
@@ -75,14 +80,30 @@ struct ArrangeSchedule: View {
                 }
 
                 Button(action: {
-                    let scheduleData = ScheduleData(
-                        myTask: myTask,
-                        selectedDate: selectedDate,
+//                    let scheduleData = ScheduleData(
+//                        myTask: myTask,
+//                        selectedDate: selectedDate,
+//                        startTime: startTime,
+//                        endTime: endTime,
+//                        partnerType: partnerType
+//                    )
+//                    sendScheduleData(scheduleData)
+                    let meetingData = Meeting(
+                        meetingID: 2,
+                        task: myTask,
                         startTime: startTime,
-                        endTime: endTime,
-                        partnerType: partnerType
+                        endTime: endTime, // Adding 1 hour to the start time
+                        creatorID: 2,
+                        preference: partnerType,
+                        creator: Student(studentID: 2, emailID: "creator@example.com", password: "password123", firstName: "Jane", lastName: "Doe", meetings: [], favoritedBy: [], favoritedMeetings: [])
                     )
-                    sendScheduleData(scheduleData)
+                    context.insert(meetingData)
+                    dismiss()
+                    
+                    
+                    
+                    
+
                 }) {
                     HStack {
                         Image(systemName: "person.crop.square.badge.video.fill")

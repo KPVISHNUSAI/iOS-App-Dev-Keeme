@@ -2,27 +2,20 @@
 import SwiftUI
 import SwiftUIIntrospect
 
-struct UserModel: Identifiable {
-    let id: String = UUID().uuidString
-    let displayName: String
-    let userName: String
-    let taskDescription: String
-    let isFavourite: Bool
-    let date: Date
-
-    // Function to generate random dates and times
-    static func randomDate() -> Date {
-        let randomDaysAgo = Int.random(in: 1...10)
-        let randomHoursAgo = Int.random(in: 1...24)
-        return Calendar.current.date(byAdding: .hour, value: -randomHoursAgo, to: Calendar.current.date(byAdding: .day, value: -randomDaysAgo, to: Date())!)!
-    }
-}
-
 struct ScheduleView: View {
     @State var users: [UserModel] = [
-        UserModel(displayName: "Rita", userName: "rita123", taskDescription: "Today I am starting to organize my notes in notion", isFavourite: true, date: UserModel.randomDate()),
-        UserModel(displayName: "John", userName: "john456", taskDescription: "Today I am starting to organize my notes in notion", isFavourite: false, date: UserModel.randomDate()),
-        UserModel(displayName: "Alice", userName: "alice789", taskDescription: "Today I am starting to organize my notes in notion", isFavourite: true, date: UserModel.randomDate())
+        UserModel(displayName: "Rita", userName: "rita123", taskDescription: "Today I am starting to organize my notes in notion", isFavourite: true, date: Date(), noOfMeetsAttended: 5),
+        UserModel(displayName: "John", userName: "john456", taskDescription: "Today I am starting to organize my notes in notion", isFavourite: false, date: Date(), noOfMeetsAttended: 5),
+        UserModel(displayName: "Alice", userName: "alice789", taskDescription: "Today I am starting to organize my notes in notion", isFavourite: true, date: Date(), noOfMeetsAttended: 5),
+        UserModel(displayName: "Bob", userName: "bob321", taskDescription: "Working on a new project", isFavourite: false, date: Date(), noOfMeetsAttended: 5),
+        UserModel(displayName: "Eva", userName: "eva567", taskDescription: "Preparing for upcoming exams", isFavourite: true, date: Date(), noOfMeetsAttended: 5),
+        UserModel(displayName: "David", userName: "david890", taskDescription: "Learning SwiftUI", isFavourite: false, date: Date(), noOfMeetsAttended: 5),
+        UserModel(displayName: "Sophie", userName: "sophie234", taskDescription: "Gardening in the backyard", isFavourite: true, date: Date(), noOfMeetsAttended: 5),
+        UserModel(displayName: "Michael", userName: "michael567", taskDescription: "Running a marathon", isFavourite: false, date: Date(), noOfMeetsAttended: 5),
+        UserModel(displayName: "Emma", userName: "emma890", taskDescription: "Cooking a new recipe", isFavourite: true, date: Date(), noOfMeetsAttended: 5),
+        UserModel(displayName: "Daniel", userName: "daniel123", taskDescription: "Writing a blog post", isFavourite: false, date: Date(), noOfMeetsAttended: 5),
+        UserModel(displayName: "Olivia", userName: "olivia456", taskDescription: "Traveling to a new city", isFavourite: true, date: Date(), noOfMeetsAttended: 5),
+        // Add more dummy data as needed
     ]
     @State private var isAddScheduleViewPresented = false
 
@@ -47,6 +40,8 @@ struct ScheduleView: View {
                                     Text(user.taskDescription)
                                         .foregroundColor(.gray)
                                         .font(.caption)
+                                        .lineLimit(1)
+                                        .truncationMode(.tail)
                                     Text("\(user.date, style: .date) \(user.date, style: .time)")
                                         .font(.caption)
                                         .foregroundColor(.purpleSet)

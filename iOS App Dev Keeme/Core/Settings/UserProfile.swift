@@ -86,3 +86,20 @@ enum Gender: String, CaseIterable {
     case other = "Other"
     case unspecified = "Unspecified"
 }
+
+struct UserModel: Identifiable {
+    let id: String = UUID().uuidString
+    let displayName: String
+    let userName: String
+    let taskDescription: String
+    let isFavourite: Bool
+    let date: Date
+    let noOfMeetsAttended: Int
+
+    // Function to generate random dates and times
+    static func randomDate() -> Date {
+        let randomDaysAgo = Int.random(in: 1...10)
+        let randomHoursAgo = Int.random(in: 1...24)
+        return Calendar.current.date(byAdding: .hour, value: -randomHoursAgo, to: Calendar.current.date(byAdding: .day, value: -randomDaysAgo, to: Date())!)!
+    }
+}

@@ -1,8 +1,13 @@
 import SwiftUI
+import SwiftData
 
 struct BuddyView: View {
     let listing: Listing
-        @State private var isSlotBooked = false
+    @State private var isSlotBooked = false
+    @Environment(\.modelContext) private var context
+    @Query(sort: \Meeting.startTime) private var meetings: [Meeting]
+    @Environment(\.dismiss) var dismiss
+    
     var body: some View {
         ScrollView {
             HStack {
@@ -21,7 +26,14 @@ struct BuddyView: View {
             }
 
             HStack {
-                Button(action: {}, label: {
+                Button(action: {
+                    let studentInstance = Student(studentID: 2, emailID: "Vishnu@example.com", password: "password", firstName: listing.name, lastName: listing.name, meetings: [], favoritedBy: [], favoritedMeetings: [])
+                    let meetingInstance = Meeting(meetingID: 2, task: listing.description, startTime: Date(), endTime: Date(), creatorID: 1, preference: "Anyone", creator: studentInstance)
+
+                    let newFavourite = FavoriteMeetings(studentID: 2, meetingID: 1, student: studentInstance, meeting: meetingInstance)
+                    context.insert(newFavourite)
+                    dismiss()
+                }, label: {
                     Text("Add to Favorites")
                     Image(systemName: "star.fill")
                 })

@@ -1,9 +1,5 @@
 import SwiftUI
 
-
-
-
-
 struct FavouritesView: View {
     @State private var searchText = ""
     

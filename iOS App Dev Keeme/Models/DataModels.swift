@@ -60,7 +60,7 @@ import SwiftUI
 
 @Model
 final class Meeting {
-    @Attribute(.unique)
+    //@Attribute(.unique)
     var meetingID: Int
     
     var task: String

@@ -2,13 +2,13 @@
 import SwiftUI
 import SwiftData
 
-struct ScheduleData: Codable {
-    let myTask: String
-    let selectedDate: Date
-    let startTime: Date
-    let endTime: Date
-    let partnerType: String
-}
+//struct ScheduleData: Codable {
+//    let myTask: String
+//    let selectedDate: Date
+//    let startTime: Date
+//    let endTime: Date
+//    let partnerType: String
+//}
 
 struct ArrangeSchedule: View {
     let yourPreferences = ["Favourites", "Anyone"]
@@ -21,7 +21,7 @@ struct ArrangeSchedule: View {
     @State private var minimumDate: Date = Date()
     
     @Environment(\.modelContext) private var context
-    @Query(sort: \Meeting.startTime) private var meetings: [Meeting]
+    
     @Environment(\.dismiss) var dismiss
     
     let hours = Array(0...24)
@@ -89,22 +89,21 @@ struct ArrangeSchedule: View {
 //                    )
 //                    sendScheduleData(scheduleData)
                     let meetingData = Meeting(
-                        meetingID: 2,
+                        meetingID: 1,
                         task: myTask,
                         startTime: startTime,
                         endTime: endTime, // Adding 1 hour to the start time
-                        creatorID: 2,
+                        creatorID: 1,
                         preference: partnerType,
-                        creator: Student(studentID: 2, emailID: "creator@example.com", password: "password123", firstName: "Jane", lastName: "Doe", meetings: [], favoritedBy: [], favoritedMeetings: [])
+                        creator: Student(studentID: 1, emailID: "creator@example.com", password: "password123", firstName: "Jane", lastName: "Doe", meetings: [], favoritedBy: [], favoritedMeetings: [])
                     )
                     context.insert(meetingData)
                     dismiss()
+                    print("data added")
                     
                     
                     
-                    
-
-                }) {
+                    }) {
                     HStack {
                         Image(systemName: "person.crop.square.badge.video.fill")
                         Text("Create KSpace")
@@ -125,10 +124,10 @@ struct ArrangeSchedule: View {
         Spacer()
     }
 
-    func sendScheduleData(_ scheduleData: ScheduleData) {
-        // Implement your data sending logic here, e.g., using a networking library
-        print("Sending schedule data:", scheduleData) // Example placeholder
-    }
+//    func sendScheduleData(_ scheduleData: ScheduleData) {
+//        // Implement your data sending logic here, e.g., using a networking library
+//        print("Sending schedule data:", scheduleData) // Example placeholder
+//    }
 }
 
 struct ArrangeSchedule_Previews: PreviewProvider {

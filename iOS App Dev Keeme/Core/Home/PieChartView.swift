@@ -27,14 +27,24 @@ struct PieChartView: View {
             .padding()
             
             VStack(alignment: .leading) {
-                Text("TargetTime : 60 mins\n\nTimeFocused : 38 mins")
-                    .font(
-                        Font.custom("SF Pro Display", size: sizeClass == .compact ? 15: 20)
-                            .weight(.bold)
-                    )
+                
+                Text("TargetTime : 60 mins")
+                    .fontWeight(.bold)
                     .multilineTextAlignment(.leading)
                     .foregroundColor(.black)
                     .padding()
+                    .font(.system(size: 13))
+                
+                Text("TimeFocused : 38 mins")
+                    .fontWeight(.bold)
+                    .multilineTextAlignment(.leading)
+                    .foregroundColor(.black)
+                    .padding()
+                    .font(.system(size: 13))
+                
+                
+                    
+                
             }
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)

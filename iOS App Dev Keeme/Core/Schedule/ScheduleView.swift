@@ -2,49 +2,53 @@ import SwiftUI
 import SwiftUIIntrospect
 import SwiftData
 
+
+
+
 struct ScheduleView: View {
     @State private var isAddScheduleViewPresented = false
     @Environment(\.modelContext) private var context
-    @Query(sort: \Meeting.startTime) private var meetings: [Meeting]
+    @Query(sort: \KeemeSpace.startTime) private var KeemeSpaceVar: [KeemeSpace]
     
     var body: some View {
         NavigationView {
             VStack {
                 List {
-                    ForEach(meetings) { meeting in
+                    ForEach(KeemeSpaceVar) { KSV in
                         Section(header: EmptyView()) {
-                            HStack(spacing: 15) {
-                                Circle()
-                                    .frame(width: 40, height: 40)
-                                VStack(alignment: .leading) {
-                                    HStack(alignment: .center) {
-                                        Text(meeting.task)
-                                            .font(.headline)
-                                        if meeting.preference == "Favourites" {
-                                            Image(systemName: "star.fill")
-                                                .foregroundColor(.yellow)
+                            NavigationLink(destination: ShowScheduleView(KSV: KSV)){
+                                HStack(spacing: 15) {
+                                    Circle()
+                                        .frame(width: 40, height: 40)
+                                    VStack(alignment: .leading) {
+                                        HStack(alignment: .center) {
+                                            Text(KSV.keemeSpaceName)
+                                                .font(.headline)
+    //                                        if meeting.preference == "Favourites" {
+    //                                            Image(systemName: "star.fill")
+    //                                                .foregroundColor(.yellow)
+    //                                        }
                                         }
+                                        Text(KSV.keemeDescription)
+                                            .foregroundColor(.gray)
+                                            .font(.caption)
+                                            .lineLimit(1)
+                                            .truncationMode(.tail)
+                                        Text("\(KSV.startTime, style: .date) \(KSV.startTime, style: .time)")
+                                            .font(.caption)
+                                            .foregroundColor(.purpleSet)
+                                            .bold()
                                     }
-                                    Text(meeting.task)
-                                        .foregroundColor(.gray)
-                                        .font(.caption)
-                                        .lineLimit(1)
-                                        .truncationMode(.tail)
-                                    Text("\(meeting.startTime, style: .date) \(meeting.startTime, style: .time)")
-                                        .font(.caption)
-                                        .foregroundColor(.purpleSet)
-                                        .bold()
+                                    Spacer()
                                 }
-                                Spacer()
-                                Image(systemName: "arrowshape.right.circle.fill")
-                                    .foregroundColor(.red)
                             }
+                            
                         }
                     }
                     .onDelete { indexSet in
                         indexSet.forEach { index in
-                            let meeting = meetings[index]
-                            context.delete(meeting)
+                            let KeemeSV = KeemeSpaceVar[index]
+                            context.delete(KeemeSV)
                         }
                     }
                 }
@@ -67,7 +71,107 @@ struct ScheduleView: View {
             )
         }
     }
+    
 }
+
+
+struct ShowScheduleView: View {
+    var KSV: KeemeSpace
+    var body: some View {
+        VStack {
+            Image(systemName: "person.3.fill")
+                .font(.system(size: 150))
+                .padding(10)
+            HStack{
+                VStack(alignment: .leading){
+                    Text("Name: \(KSV.keemeSpaceName)")
+                    Text("Number of Favourites: \(KSV.keemeDescription)")
+                    Text("\(KSV.startTime, style: .date) \(KSV.startTime, style: .time)")
+                    
+                }
+                Spacer()
+            }.padding()
+            
+            // Add other details you want to display on the user's profile page
+            
+            Spacer()
+        }
+        .navigationTitle(KSV.keemeSpaceName)
+    }
+    
+    
+    
+}
+
+
+
+
+//struct ScheduleView: View {
+//    @State private var isAddScheduleViewPresented = false
+//    @Environment(\.modelContext) private var context
+//    @Query(sort: \Meeting.startTime) private var meetings: [Meeting]
+//
+//    var body: some View {
+//        NavigationView {
+//            VStack {
+//                List {
+//                    ForEach(meetings) { meeting in
+//                        Section(header: EmptyView()) {
+//                            HStack(spacing: 15) {
+//                                Circle()
+//                                    .frame(width: 40, height: 40)
+//                                VStack(alignment: .leading) {
+//                                    HStack(alignment: .center) {
+//                                        Text(meeting.task)
+//                                            .font(.headline)
+//                                        if meeting.preference == "Favourites" {
+//                                            Image(systemName: "star.fill")
+//                                                .foregroundColor(.yellow)
+//                                        }
+//                                    }
+//                                    Text(meeting.task)
+//                                        .foregroundColor(.gray)
+//                                        .font(.caption)
+//                                        .lineLimit(1)
+//                                        .truncationMode(.tail)
+//                                    Text("\(meeting.startTime, style: .date) \(meeting.startTime, style: .time)")
+//                                        .font(.caption)
+//                                        .foregroundColor(.purpleSet)
+//                                        .bold()
+//                                }
+//                                Spacer()
+//                                Image(systemName: "arrowshape.right.circle.fill")
+//                                    .foregroundColor(.red)
+//                            }
+//                        }
+//                    }
+//                    .onDelete { indexSet in
+//                        indexSet.forEach { index in
+//                            let meeting = meetings[index]
+//                            context.delete(meeting)
+//                        }
+//                    }
+//                }
+//                .listStyle(.insetGrouped)
+//                .listSectionSpacing(.compact)
+//                .navigationTitle("Schedule")
+//            }
+//            .overlay(
+//
+//                HStack {
+//                    Spacer()
+//                    NavigationLink(destination: ArrangeSchedule()) {
+//                        Image(systemName: "plus")
+//                            .padding()
+//                            .background(Circle().fill(Color.purpleSet))
+//                            .foregroundColor(.white)
+//                    }
+//                }
+//                    .padding() , alignment: .bottomTrailing
+//            )
+//        }
+//    }
+//}
 
 struct ScheduleView_Previews: PreviewProvider {
     static var previews: some View {

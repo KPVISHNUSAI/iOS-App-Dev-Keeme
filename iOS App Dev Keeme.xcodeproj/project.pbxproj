@@ -38,6 +38,9 @@
 		0F10023E2B6CA9AF0050906E /* SwiftUIIntrospect-Static in Frameworks */ = {isa = PBXBuildFile; productRef = 0F10023D2B6CA9AF0050906E /* SwiftUIIntrospect-Static */; };
 		0F1002492B6CE3DF0050906E /* UserK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1002482B6CE3DF0050906E /* UserK.swift */; };
 		0F59C1DF2B6D59E900C5BE68 /* DataSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F59C1DE2B6D59E900C5BE68 /* DataSchema.swift */; };
+		0F5F5EDE2B904B810089EE71 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F5EDD2B904B810089EE71 /* User.swift */; };
+		0F5F5EE02B904D920089EE71 /* KeemeSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F5EDF2B904D920089EE71 /* KeemeSpace.swift */; };
+		0F71C0552B92537500C48015 /* UserSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F71C0542B92537500C48015 /* UserSamples.swift */; };
 		0FBD49932B73C5BD0029A2FE /* DataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FBD49922B73C5BD0029A2FE /* DataModels.swift */; };
 		0FBD49962B74B7680029A2FE /* SwiftData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FBD49952B74B7680029A2FE /* SwiftData.framework */; };
 		0FBD499A2B7523280029A2FE /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FBD49992B7523280029A2FE /* SampleData.swift */; };
@@ -74,6 +77,9 @@
 		0F1002362B6CA9650050906E /* cc.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = cc.gif; sourceTree = "<group>"; };
 		0F1002482B6CE3DF0050906E /* UserK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserK.swift; sourceTree = "<group>"; };
 		0F59C1DE2B6D59E900C5BE68 /* DataSchema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSchema.swift; sourceTree = "<group>"; };
+		0F5F5EDD2B904B810089EE71 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		0F5F5EDF2B904D920089EE71 /* KeemeSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeemeSpace.swift; sourceTree = "<group>"; };
+		0F71C0542B92537500C48015 /* UserSamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSamples.swift; sourceTree = "<group>"; };
 		0FBD49922B73C5BD0029A2FE /* DataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModels.swift; sourceTree = "<group>"; };
 		0FBD49952B74B7680029A2FE /* SwiftData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftData.framework; path = System/Library/Frameworks/SwiftData.framework; sourceTree = SDKROOT; };
 		0FBD49992B7523280029A2FE /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
@@ -133,6 +139,7 @@
 				0F1001F82B6CA47F0050906E /* Preview Assets.xcassets */,
 				0FBD49992B7523280029A2FE /* SampleData.swift */,
 				0FBD499B2B75289C0029A2FE /* PreviewContainer.swift */,
+				0F71C0542B92537500C48015 /* UserSamples.swift */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -251,6 +258,8 @@
 				0F1002482B6CE3DF0050906E /* UserK.swift */,
 				0F59C1DE2B6D59E900C5BE68 /* DataSchema.swift */,
 				0FBD49922B73C5BD0029A2FE /* DataModels.swift */,
+				0F5F5EDD2B904B810089EE71 /* User.swift */,
+				0F5F5EDF2B904D920089EE71 /* KeemeSpace.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -357,6 +366,7 @@
 				0F10022D2B6CA9300050906E /* CustomCorners.swift in Sources */,
 				0F1001F22B6CA47E0050906E /* iOS_App_Dev_KeemeApp.swift in Sources */,
 				0FBD499A2B7523280029A2FE /* SampleData.swift in Sources */,
+				0F5F5EDE2B904B810089EE71 /* User.swift in Sources */,
 				0FBD49932B73C5BD0029A2FE /* DataModels.swift in Sources */,
 				0F1002292B6CA8E90050906E /* PieData.swift in Sources */,
 				0F1002492B6CE3DF0050906E /* UserK.swift in Sources */,
@@ -366,9 +376,11 @@
 				0F10022F2B6CA9400050906E /* LoginPage1.swift in Sources */,
 				0F1002352B6CA95F0050906E /* KeemeSpaceView.swift in Sources */,
 				0F10021D2B6CA8BB0050906E /* HomeView.swift in Sources */,
+				0F5F5EE02B904D920089EE71 /* KeemeSpace.swift in Sources */,
 				0F10022B2B6CA8F70050906E /* Listing.swift in Sources */,
 				0F10020F2B6CA76B0050906E /* FavouritesView.swift in Sources */,
 				0F1002132B6CA8310050906E /* ArrangeSchedule.swift in Sources */,
+				0F71C0552B92537500C48015 /* UserSamples.swift in Sources */,
 				0F1002272B6CA8E20050906E /* HomeScheduleBar.swift in Sources */,
 				0F1002312B6CA9480050906E /* Logo1.swift in Sources */,
 				0F1002172B6CA8580050906E /* ScheduleView.swift in Sources */,

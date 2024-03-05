@@ -1,16 +1,23 @@
 import SwiftUI
+import SwiftData
 
 struct HomeScheduleBar: View {
+    @Environment(\.modelContext) private var context
+    @Query private var users: [User]
+    @Query private var keemespace: [KeemeSpace]
+    
     var body: some View {
         HStack{
             VStack(alignment: .leading, spacing: 2 ){
                 Text("Scheduled")
                     .font(.system(size:18,weight: .medium,design: .default))
-                Text("Studying with Rita")
+                Text("Study with \(users[0].username)")
                     .font(.system(size:14,weight: .medium,design: .default))
-                Text("11:40 am to 12:40 pm")
+                Text("\(keemespace[0].startTime, style: .time)")
                     .font(.system(size:16,weight: .medium,design: .default))
                     .foregroundColor(.purpleSet)
+                
+                
             }
             .padding()
             Spacer()

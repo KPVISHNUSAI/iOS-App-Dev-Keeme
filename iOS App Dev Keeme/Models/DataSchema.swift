@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 //@Model
-class User {
+class User1 {
     let id = UUID()
     var firstName : String
     var lastName : String
@@ -38,7 +38,7 @@ class User {
 
 
 @Model
-class KeemeSpace {
+class KeemeSpace1 {
     let keemeSpaceId = UUID()
     var keemeSpaceName : String
     var keemeDesc : String

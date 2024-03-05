@@ -38,7 +38,8 @@ struct iOS_App_Dev_KeemeApp: App {
 //    }
     
     init() {
-        let schema = Schema([Student.self, Meeting.self, StudentMeeting.self, FavoriteStudents.self, FavoriteMeetings.self])
+        let schema = Schema([User.self
+                             /*Student.self, Meeting.self, StudentMeeting.self, FavoriteStudents.self, FavoriteMeetings.self*/])
         let config = ModelConfiguration("KeemeApp",schema: schema)
         do {
             container = try ModelContainer(for: schema, configurations: config)

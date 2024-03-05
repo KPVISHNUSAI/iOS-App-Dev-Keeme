@@ -18,10 +18,9 @@ import SwiftUI
     var password: String // Consider using a secure storage mechanism for passwords
     var firstName: String
     var lastName: String
-
     // Foreign key relationships (using macros for clarity and efficiency)
     @Relationship(deleteRule: .cascade)
-    var meetings: [Meeting]?
+    var meetings: [Student]?
 
 //    @Relationship(deleteRule: .nullify, inverse: \FavoriteStudents.favoriteStudent)
     @Relationship(deleteRule: .nullify)
@@ -31,12 +30,13 @@ import SwiftUI
     @Relationship(deleteRule: .cascade)
     var favoritedMeetings: [Meeting] = []
 
-    init(studentID: Int, emailID: String, password: String, firstName: String, lastName: String, meetings: [Meeting], favoritedBy: [FavoriteStudents], favoritedMeetings: [Meeting]) {
+    init(studentID: Int, emailID: String, password: String, firstName: String, lastName: String, meetings: [Student], favoritedBy: [FavoriteStudents], favoritedMeetings: [Meeting]) {
         self.studentID = studentID
         self.emailID = emailID
         self.password = password
         self.firstName = firstName
         self.lastName = lastName
+        
         self.meetings = meetings
         self.favoritedBy = favoritedBy
         self.favoritedMeetings = favoritedMeetings
@@ -60,7 +60,7 @@ import SwiftUI
 
 @Model
 final class Meeting {
-    @Attribute(.unique)
+    //@Attribute(.unique)
     var meetingID: Int
     
     var task: String

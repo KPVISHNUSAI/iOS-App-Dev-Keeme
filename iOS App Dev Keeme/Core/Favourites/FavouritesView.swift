@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 
 
@@ -6,6 +7,8 @@ import SwiftUI
 
 struct FavouritesView: View {
     @State private var searchText = ""
+    @Environment(\.modelContext) private var context
+    @Query(sort: \User.username) private var fav: [User]
     
     @State private var users: [UserModel] = [
         UserModel(displayName: "Rita", userName: "rita123", taskDescription: "Today I am starting to organize my notes in notion", isFavourite: true, date: Date(), noOfMeetsAttended: 5),
@@ -40,7 +43,10 @@ struct FavouritesView: View {
             VStack{
                 SearchBar(text: $searchText)
                 List {
-                    ForEach(filteredUsers) {user in
+                    Section(header:EmptyView()){
+                        
+                    }
+                    ForEach(filteredUsers) { user in
                         Section(header: EmptyView()) {
                             NavigationLink(destination: FavouritesProfileView(user: user)) {
                                 HStack(spacing: 15) {

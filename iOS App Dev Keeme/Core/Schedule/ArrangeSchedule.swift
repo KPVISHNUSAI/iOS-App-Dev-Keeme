@@ -2,26 +2,28 @@
 import SwiftUI
 import SwiftData
 
-struct ScheduleData: Codable {
-    let myTask: String
-    let selectedDate: Date
-    let startTime: Date
-    let endTime: Date
-    let partnerType: String
-}
+//struct ScheduleData: Codable {
+//    let myTask: String
+//    let selectedDate: Date
+//    let startTime: Date
+//    let endTime: Date
+//    let partnerType: String
+//}
 
 struct ArrangeSchedule: View {
     let yourPreferences = ["Favourites", "Anyone"]
     @State private var myTask = ""
-    @State private var selectedDate: Date = Date()
+    @State private var name: String = ""
+    //@State private var selectedDate: Date = Date()
     @State private var startTime: Date = Date()
     @State private var endTime: Date = Date()
     @State private var partnerType: String = "Favourites"
     @State private var isHovered = false
     @State private var minimumDate: Date = Date()
+    //@State private var duration: Date = DateComponents([.minutes],from:startTime as! Decoder
     
     @Environment(\.modelContext) private var context
-    @Query(sort: \Meeting.startTime) private var meetings: [Meeting]
+    
     @Environment(\.dismiss) var dismiss
     
     let hours = Array(0...24)
@@ -31,6 +33,21 @@ struct ArrangeSchedule: View {
         Form {
             Section {
                 VStack {
+                    HStack {
+                        Text("Name:")
+                                .foregroundColor(.black)
+                                .padding(.trailing, 8)
+                        Spacer()
+                        TextField("Enter your Keemespace Name: ", text: $name)
+                            .padding()
+                            .background(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
+                            .multilineTextAlignment(.leading)
+                            .foregroundColor(.black)
+                            .padding([.leading, .trailing], 10) // Add padding to the leading and trailing edges
+                            .disableAutocorrection(true)
+                    }
+
+                    
                     HStack{
                         Text("Task:")
                                 .foregroundColor(.black)
@@ -44,7 +61,7 @@ struct ArrangeSchedule: View {
                             .padding([.leading, .trailing], 10) // Add padding to the leading and trailing edges
                             .disableAutocorrection(true)
                     }
-                    
+                                        
 
                     DatePicker("Starts at", selection: $startTime, in: minimumDate..., displayedComponents: [.date, .hourAndMinute])
                         .onChange(of: startTime) { newValue in
@@ -88,23 +105,23 @@ struct ArrangeSchedule: View {
 //                        partnerType: partnerType
 //                    )
 //                    sendScheduleData(scheduleData)
-                    let meetingData = Meeting(
-                        meetingID: 2,
-                        task: myTask,
-                        startTime: startTime,
-                        endTime: endTime, // Adding 1 hour to the start time
-                        creatorID: 2,
-                        preference: partnerType,
-                        creator: Student(studentID: 2, emailID: "creator@example.com", password: "password123", firstName: "Jane", lastName: "Doe", meetings: [], favoritedBy: [], favoritedMeetings: [])
-                    )
-                    context.insert(meetingData)
+//                    let meetingData = Meeting(
+//                        meetingID: 2,
+//                        task: myTask,
+//                        startTime: startTime,
+//                        endTime: endTime, // Adding 1 hour to the start time
+//                        creatorID: 2,
+//                        preference: partnerType,
+//                        creator: Student(studentID: 2, emailID: "creator@example.com", password: "password123", firstName: "Jane", lastName: "Doe", meetings: [], favoritedBy: [], favoritedMeetings: [])
+                    let addKeemeSpacefromSchedule = KeemeSpace(keemeSpaceName: name, keemeDescription: myTask, startTime: startTime, endTime: endTime, maxStudents: 2)
+                    
+                    context.insert(addKeemeSpacefromSchedule)
                     dismiss()
+                    print("data added")
                     
                     
                     
-                    
-
-                }) {
+                    }) {
                     HStack {
                         Image(systemName: "person.crop.square.badge.video.fill")
                         Text("Create KSpace")
@@ -125,10 +142,10 @@ struct ArrangeSchedule: View {
         Spacer()
     }
 
-    func sendScheduleData(_ scheduleData: ScheduleData) {
-        // Implement your data sending logic here, e.g., using a networking library
-        print("Sending schedule data:", scheduleData) // Example placeholder
-    }
+//    func sendScheduleData(_ scheduleData: ScheduleData) {
+//        // Implement your data sending logic here, e.g., using a networking library
+//        print("Sending schedule data:", scheduleData) // Example placeholder
+//    }
 }
 
 struct ArrangeSchedule_Previews: PreviewProvider {
@@ -136,3 +153,4 @@ struct ArrangeSchedule_Previews: PreviewProvider {
         ArrangeSchedule()
     }
 }
+

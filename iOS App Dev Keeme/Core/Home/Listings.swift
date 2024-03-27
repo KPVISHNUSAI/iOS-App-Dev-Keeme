@@ -5,7 +5,7 @@ import SwiftData
 struct Listings: View {
     @Environment(\.modelContext) private var context
     //@Bindable var UserCard : [User]
-    @Query private var UserCard: [User]
+    @Query private var UserCard: [UserTrail]
     @Query(sort: \KeemeSpace.startTime) private var keeme : [KeemeSpace]
     @State private var searchText = ""
     
@@ -15,7 +15,7 @@ struct Listings: View {
 //        addUserplz()
 //    }
     
-    var filteredUsers: [User] {
+    var filteredUsers: [UserTrail] {
             if searchText.isEmpty {
                 return UserCard
             } else {
@@ -28,7 +28,7 @@ struct Listings: View {
     var body: some View {
         NavigationView {
             VStack {
-//              Button("add plz add data", action: addUserplz)
+              Button("add plz add data", action: addUserplz)
                 SearchBarFind(text: $searchText)
                 List {
                     ForEach(filteredUsers) { user in
@@ -133,10 +133,10 @@ struct Listings: View {
         let SampleKeemeSpace4 = KeemeSpace(keemeSpaceName: "History Exam Review", keemeDescription: "Review key concepts and test your knowledge before the upcoming history exam!", startTime: Date(timeInterval: 14400, since: Date()), endTime: Date(timeInterval: 18000, since: Date()), duration: Date(timeInterval: 3600, since: Date()), maxStudents: 10)
     
         
-        let SampleUserdata1 = User(firstName: "Rahul", lastName: "Sharma", isfav: false, username: "rahulsharma",keemes: [SampleKeemeSpace1])
-        let SampleUserdata2 =    User(firstName: "Priya", lastName: "Singh", isfav: true, username: "priyasingh",keemes: [SampleKeemeSpace2])
-        let SampleUserdata3 =  User(firstName: "Neha", lastName: "Patel", isfav: false, username: "nehapatel",keemes: [SampleKeemeSpace3])
-        let SampleUserdata4 = User(firstName: "Rohit", lastName: "Kumar", isfav: true, username: "rohitkumar",keemes: [SampleKeemeSpace4])
+        let SampleUserdata1 = UserTrail(firstName: "Rahul", lastName: "Sharma", isfav: false, username: "rahulsharma",keemes: [SampleKeemeSpace1])
+        let SampleUserdata2 =    UserTrail(firstName: "Priya", lastName: "Singh", isfav: true, username: "priyasingh",keemes: [SampleKeemeSpace2])
+        let SampleUserdata3 =  UserTrail(firstName: "Neha", lastName: "Patel", isfav: false, username: "nehapatel",keemes: [SampleKeemeSpace3])
+        let SampleUserdata4 = UserTrail(firstName: "Rohit", lastName: "Kumar", isfav: true, username: "rohitkumar",keemes: [SampleKeemeSpace4])
         context.insert(SampleUserdata1)
         context.insert(SampleUserdata2)
         context.insert(SampleUserdata3)
@@ -209,7 +209,7 @@ struct SearchBarFind: View {
 
 
 struct NewView: View {
-    var user: User
+    var user: UserTrail
     var body: some View {
         VStack{
             Text("Hello, \(user.username)")

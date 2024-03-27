@@ -773,3 +773,6 @@ struct CheckBoxView: View {
         .padding(.horizontal, 20)
     }
 }
+
+
+

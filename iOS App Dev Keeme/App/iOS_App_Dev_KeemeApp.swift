@@ -38,7 +38,7 @@ struct iOS_App_Dev_KeemeApp: App {
 //    }
     
     init() {
-        let schema = Schema([User.self
+        let schema = Schema([UserTrail.self
                              /*Student.self, Meeting.self, StudentMeeting.self, FavoriteStudents.self, FavoriteMeetings.self*/])
         let config = ModelConfiguration("KeemeApp",schema: schema)
         do {

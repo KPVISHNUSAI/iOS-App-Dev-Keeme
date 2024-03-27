@@ -9,13 +9,13 @@ import Foundation
 import SwiftData
 
 @Model
-class User {
+class UserTrail {
     var userID = UUID()
     var firstName: String
     var lastName: String
     var isfav:Bool
     @Attribute(.unique) var username: String
-    var favouritebuddies = [User]()
+    var favouritebuddies = [UserTrail]()
     
     //    var DateOfBirth: Date
     //    var about: String
@@ -29,7 +29,7 @@ class User {
     //    var password: String
     
     var keemes : [KeemeSpace]?
-    init(userID: UUID = UUID(), firstName: String, lastName: String, isfav: Bool, username: String, favouritebuddies: [User] = [User](), keemes: [KeemeSpace]? = nil) {
+    init(userID: UUID = UUID(), firstName: String, lastName: String, isfav: Bool, username: String, favouritebuddies: [UserTrail] = [UserTrail](), keemes: [KeemeSpace]? = nil) {
         self.userID = userID
         self.firstName = firstName
         self.lastName = lastName

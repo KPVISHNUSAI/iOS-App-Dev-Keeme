@@ -33,18 +33,20 @@
 		0F1002332B6CA94D0050906E /* LoginPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1002322B6CA94D0050906E /* LoginPageModel.swift */; };
 		0F1002352B6CA95F0050906E /* KeemeSpaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1002342B6CA95F0050906E /* KeemeSpaceView.swift */; };
 		0F1002372B6CA9650050906E /* cc.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0F1002362B6CA9650050906E /* cc.gif */; };
-		0F10023A2B6CA9AF0050906E /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = 0F1002392B6CA9AF0050906E /* SwiftUIIntrospect */; };
-		0F10023C2B6CA9AF0050906E /* SwiftUIIntrospect-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 0F10023B2B6CA9AF0050906E /* SwiftUIIntrospect-Dynamic */; };
-		0F10023E2B6CA9AF0050906E /* SwiftUIIntrospect-Static in Frameworks */ = {isa = PBXBuildFile; productRef = 0F10023D2B6CA9AF0050906E /* SwiftUIIntrospect-Static */; };
 		0F1002492B6CE3DF0050906E /* UserK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1002482B6CE3DF0050906E /* UserK.swift */; };
 		0F59C1DF2B6D59E900C5BE68 /* DataSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F59C1DE2B6D59E900C5BE68 /* DataSchema.swift */; };
-		0F5F5EDE2B904B810089EE71 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F5EDD2B904B810089EE71 /* User.swift */; };
+		0F5F5EDE2B904B810089EE71 /* UserTrail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F5EDD2B904B810089EE71 /* UserTrail.swift */; };
 		0F5F5EE02B904D920089EE71 /* KeemeSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5F5EDF2B904D920089EE71 /* KeemeSpace.swift */; };
 		0F71C0552B92537500C48015 /* UserSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F71C0542B92537500C48015 /* UserSamples.swift */; };
+		0F7603FF2BB028A5006D7534 /* StreamVideo in Frameworks */ = {isa = PBXBuildFile; productRef = 0F7603FE2BB028A5006D7534 /* StreamVideo */; };
+		0F7604012BB028A5006D7534 /* StreamVideoSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 0F7604002BB028A5006D7534 /* StreamVideoSwiftUI */; };
+		0F7604032BB0A817006D7534 /* VideoCallCustomUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7604022BB0A817006D7534 /* VideoCallCustomUI.swift */; };
+		0F87CCC12BA88564005589F7 /* VideoCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F87CCC02BA88564005589F7 /* VideoCall.swift */; };
 		0FBD49932B73C5BD0029A2FE /* DataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FBD49922B73C5BD0029A2FE /* DataModels.swift */; };
-		0FBD49962B74B7680029A2FE /* SwiftData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FBD49952B74B7680029A2FE /* SwiftData.framework */; };
 		0FBD499A2B7523280029A2FE /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FBD49992B7523280029A2FE /* SampleData.swift */; };
 		0FBD499C2B75289C0029A2FE /* PreviewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FBD499B2B75289C0029A2FE /* PreviewContainer.swift */; };
+		0FEA18B42BAAFB9600EEB8B3 /* ParticipantsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FEA18B32BAAFB9600EEB8B3 /* ParticipantsView.swift */; };
+		0FEA18B62BAAFBC400EEB8B3 /* FloatingParticipantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FEA18B52BAAFBC400EEB8B3 /* FloatingParticipantView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,13 +79,18 @@
 		0F1002362B6CA9650050906E /* cc.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = cc.gif; sourceTree = "<group>"; };
 		0F1002482B6CE3DF0050906E /* UserK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserK.swift; sourceTree = "<group>"; };
 		0F59C1DE2B6D59E900C5BE68 /* DataSchema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSchema.swift; sourceTree = "<group>"; };
-		0F5F5EDD2B904B810089EE71 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		0F5F5EDD2B904B810089EE71 /* UserTrail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTrail.swift; sourceTree = "<group>"; };
 		0F5F5EDF2B904D920089EE71 /* KeemeSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeemeSpace.swift; sourceTree = "<group>"; };
 		0F71C0542B92537500C48015 /* UserSamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSamples.swift; sourceTree = "<group>"; };
+		0F7604022BB0A817006D7534 /* VideoCallCustomUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallCustomUI.swift; sourceTree = "<group>"; };
+		0F87CCBA2BA88147005589F7 /* iOS-App-Dev-Keeme-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "iOS-App-Dev-Keeme-Info.plist"; sourceTree = SOURCE_ROOT; };
+		0F87CCC02BA88564005589F7 /* VideoCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCall.swift; sourceTree = "<group>"; };
 		0FBD49922B73C5BD0029A2FE /* DataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModels.swift; sourceTree = "<group>"; };
 		0FBD49952B74B7680029A2FE /* SwiftData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftData.framework; path = System/Library/Frameworks/SwiftData.framework; sourceTree = SDKROOT; };
 		0FBD49992B7523280029A2FE /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		0FBD499B2B75289C0029A2FE /* PreviewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContainer.swift; sourceTree = "<group>"; };
+		0FEA18B32BAAFB9600EEB8B3 /* ParticipantsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsView.swift; sourceTree = "<group>"; };
+		0FEA18B52BAAFBC400EEB8B3 /* FloatingParticipantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingParticipantView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,10 +98,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0F10023A2B6CA9AF0050906E /* SwiftUIIntrospect in Frameworks */,
-				0F10023C2B6CA9AF0050906E /* SwiftUIIntrospect-Dynamic in Frameworks */,
-				0FBD49962B74B7680029A2FE /* SwiftData.framework in Frameworks */,
-				0F10023E2B6CA9AF0050906E /* SwiftUIIntrospect-Static in Frameworks */,
+				0F7604012BB028A5006D7534 /* StreamVideoSwiftUI in Frameworks */,
+				0F7603FF2BB028A5006D7534 /* StreamVideo in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,6 +126,7 @@
 		0F1001F02B6CA47E0050906E /* iOS App Dev Keeme */ = {
 			isa = PBXGroup;
 			children = (
+				0F87CCBA2BA88147005589F7 /* iOS-App-Dev-Keeme-Info.plist */,
 				0F1001FF2B6CA4C30050906E /* App */,
 				0F1002002B6CA5570050906E /* Core */,
 				0F1002032B6CA5B40050906E /* Utils */,
@@ -179,6 +185,10 @@
 			children = (
 				0F1002342B6CA95F0050906E /* KeemeSpaceView.swift */,
 				0F1002362B6CA9650050906E /* cc.gif */,
+				0F87CCC02BA88564005589F7 /* VideoCall.swift */,
+				0FEA18B32BAAFB9600EEB8B3 /* ParticipantsView.swift */,
+				0FEA18B52BAAFBC400EEB8B3 /* FloatingParticipantView.swift */,
+				0F7604022BB0A817006D7534 /* VideoCallCustomUI.swift */,
 			);
 			path = KeemeSpace;
 			sourceTree = "<group>";
@@ -258,7 +268,7 @@
 				0F1002482B6CE3DF0050906E /* UserK.swift */,
 				0F59C1DE2B6D59E900C5BE68 /* DataSchema.swift */,
 				0FBD49922B73C5BD0029A2FE /* DataModels.swift */,
-				0F5F5EDD2B904B810089EE71 /* User.swift */,
+				0F5F5EDD2B904B810089EE71 /* UserTrail.swift */,
 				0F5F5EDF2B904D920089EE71 /* KeemeSpace.swift */,
 			);
 			path = Models;
@@ -296,9 +306,8 @@
 			);
 			name = "iOS App Dev Keeme";
 			packageProductDependencies = (
-				0F1002392B6CA9AF0050906E /* SwiftUIIntrospect */,
-				0F10023B2B6CA9AF0050906E /* SwiftUIIntrospect-Dynamic */,
-				0F10023D2B6CA9AF0050906E /* SwiftUIIntrospect-Static */,
+				0F7603FE2BB028A5006D7534 /* StreamVideo */,
+				0F7604002BB028A5006D7534 /* StreamVideoSwiftUI */,
 			);
 			productName = "iOS App Dev Keeme";
 			productReference = 0F1001EE2B6CA47E0050906E /* iOS App Dev Keeme.app */;
@@ -329,7 +338,7 @@
 			);
 			mainGroup = 0F1001E52B6CA47E0050906E;
 			packageReferences = (
-				0F1002382B6CA9AF0050906E /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
+				0F7603FD2BB028A5006D7534 /* XCRemoteSwiftPackageReference "stream-video-swift" */,
 			);
 			productRefGroup = 0F1001EF2B6CA47E0050906E /* Products */;
 			projectDirPath = "";
@@ -366,7 +375,7 @@
 				0F10022D2B6CA9300050906E /* CustomCorners.swift in Sources */,
 				0F1001F22B6CA47E0050906E /* iOS_App_Dev_KeemeApp.swift in Sources */,
 				0FBD499A2B7523280029A2FE /* SampleData.swift in Sources */,
-				0F5F5EDE2B904B810089EE71 /* User.swift in Sources */,
+				0F5F5EDE2B904B810089EE71 /* UserTrail.swift in Sources */,
 				0FBD49932B73C5BD0029A2FE /* DataModels.swift in Sources */,
 				0F1002292B6CA8E90050906E /* PieData.swift in Sources */,
 				0F1002492B6CE3DF0050906E /* UserK.swift in Sources */,
@@ -383,11 +392,15 @@
 				0F71C0552B92537500C48015 /* UserSamples.swift in Sources */,
 				0F1002272B6CA8E20050906E /* HomeScheduleBar.swift in Sources */,
 				0F1002312B6CA9480050906E /* Logo1.swift in Sources */,
+				0F7604032BB0A817006D7534 /* VideoCallCustomUI.swift in Sources */,
 				0F1002172B6CA8580050906E /* ScheduleView.swift in Sources */,
+				0FEA18B42BAAFB9600EEB8B3 /* ParticipantsView.swift in Sources */,
 				0F10020D2B6CA7380050906E /* MainTabView.swift in Sources */,
 				0F1002212B6CA8CC0050906E /* Listings.swift in Sources */,
 				0F1002112B6CA7980050906E /* FavouritesHeading.swift in Sources */,
+				0F87CCC12BA88564005589F7 /* VideoCall.swift in Sources */,
 				0FBD499C2B75289C0029A2FE /* PreviewContainer.swift in Sources */,
+				0FEA18B62BAAFBC400EEB8B3 /* FloatingParticipantView.swift in Sources */,
 				0F59C1DF2B6D59E900C5BE68 /* DataSchema.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -522,9 +535,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iOS App Dev Keeme/Preview Content\"";
-				DEVELOPMENT_TEAM = 7QKQ8LV932;
+				DEVELOPMENT_TEAM = 3HCCK6BSPQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS-App-Dev-Keeme-Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -535,7 +551,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "kk4563-srmist.edu.in.iOS-App-Dev-Keeme";
+				PRODUCT_BUNDLE_IDENTIFIER = "srmist.edu.in.iOS-App-Dev-Keeme";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -551,9 +567,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iOS App Dev Keeme/Preview Content\"";
-				DEVELOPMENT_TEAM = 7QKQ8LV932;
+				DEVELOPMENT_TEAM = 3HCCK6BSPQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS-App-Dev-Keeme-Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -564,7 +583,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "kk4563-srmist.edu.in.iOS-App-Dev-Keeme";
+				PRODUCT_BUNDLE_IDENTIFIER = "srmist.edu.in.iOS-App-Dev-Keeme";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -596,31 +615,26 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		0F1002382B6CA9AF0050906E /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
+		0F7603FD2BB028A5006D7534 /* XCRemoteSwiftPackageReference "stream-video-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect";
+			repositoryURL = "https://github.com/GetStream/stream-video-swift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.2;
+				minimumVersion = 0.5.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		0F1002392B6CA9AF0050906E /* SwiftUIIntrospect */ = {
+		0F7603FE2BB028A5006D7534 /* StreamVideo */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 0F1002382B6CA9AF0050906E /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
-			productName = SwiftUIIntrospect;
+			package = 0F7603FD2BB028A5006D7534 /* XCRemoteSwiftPackageReference "stream-video-swift" */;
+			productName = StreamVideo;
 		};
-		0F10023B2B6CA9AF0050906E /* SwiftUIIntrospect-Dynamic */ = {
+		0F7604002BB028A5006D7534 /* StreamVideoSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 0F1002382B6CA9AF0050906E /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
-			productName = "SwiftUIIntrospect-Dynamic";
-		};
-		0F10023D2B6CA9AF0050906E /* SwiftUIIntrospect-Static */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0F1002382B6CA9AF0050906E /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
-			productName = "SwiftUIIntrospect-Static";
+			package = 0F7603FD2BB028A5006D7534 /* XCRemoteSwiftPackageReference "stream-video-swift" */;
+			productName = StreamVideoSwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

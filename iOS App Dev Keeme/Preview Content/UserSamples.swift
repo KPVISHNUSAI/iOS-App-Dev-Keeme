@@ -7,22 +7,22 @@
 
 import Foundation
 
-extension User{
+extension UserTrail{
     
-    static var SampleUserdata: [User] {[
-        User(firstName: "Rahul", lastName: "Sharma", isfav: false, username: "rahulsharma",keemes: []),
-        User(firstName: "Priya", lastName: "Singh", isfav: true, username: "priyasingh",keemes: []),
-        User(firstName: "Neha", lastName: "Patel", isfav: false, username: "nehapatel",keemes: []),
-        User(firstName: "Rohit", lastName: "Kumar", isfav: true, username: "rohitkumar",keemes: [])
+    static var SampleUserdata: [UserTrail] {[
+        UserTrail(firstName: "Rahul", lastName: "Sharma", isfav: false, username: "rahulsharma",keemes: []),
+        UserTrail(firstName: "Priya", lastName: "Singh", isfav: true, username: "priyasingh",keemes: []),
+        UserTrail(firstName: "Neha", lastName: "Patel", isfav: false, username: "nehapatel",keemes: []),
+        UserTrail(firstName: "Rohit", lastName: "Kumar", isfav: true, username: "rohitkumar",keemes: [])
     ]}
     
     
 }
 func populateUserFavorites() {
-    User.SampleUserdata[0].favouritebuddies = [User.SampleUserdata[1], User.SampleUserdata[3]]
-    User.SampleUserdata[1].favouritebuddies = [User.SampleUserdata[0], User.SampleUserdata[2]]
-    User.SampleUserdata[2].favouritebuddies = [User.SampleUserdata[1], User.SampleUserdata[2]]
-    User.SampleUserdata[3].favouritebuddies = [User.SampleUserdata[0], User.SampleUserdata[2]]
+    UserTrail.SampleUserdata[0].favouritebuddies = [UserTrail.SampleUserdata[1], UserTrail.SampleUserdata[3]]
+    UserTrail.SampleUserdata[1].favouritebuddies = [UserTrail.SampleUserdata[0], UserTrail.SampleUserdata[2]]
+    UserTrail.SampleUserdata[2].favouritebuddies = [UserTrail.SampleUserdata[1], UserTrail.SampleUserdata[2]]
+    UserTrail.SampleUserdata[3].favouritebuddies = [UserTrail.SampleUserdata[0], UserTrail.SampleUserdata[2]]
 }
 
 

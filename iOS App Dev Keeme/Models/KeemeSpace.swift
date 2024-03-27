@@ -18,8 +18,8 @@ class KeemeSpace {
     var duration: Date?
     var maxStudents: Int
     //var preference: MeetingPrefernce
-    @Relationship(deleteRule:.nullify, inverse : \User.username)
-    var creator: [User]? = [User]()
+    @Relationship(deleteRule:.nullify, inverse : \UserTrail.username)
+    var creator: [UserTrail]? = [UserTrail]()
     
     init(keemeSpaceID: UUID = UUID(), keemeSpaceName: String, keemeDescription: String, startTime: Date, endTime: Date, duration: Date? = nil, maxStudents: Int) {
         self.keemeSpaceID = keemeSpaceID

@@ -8,7 +8,7 @@ import SwiftData
 struct FavouritesView: View {
     @State private var searchText = ""
     @Environment(\.modelContext) private var context
-    @Query(sort: \User.username) private var fav: [User]
+    @Query(sort: \UserTrail.username) private var fav: [UserTrail]
     
     @State private var users: [UserModel] = [
         UserModel(displayName: "Rita", userName: "rita123", taskDescription: "Today I am starting to organize my notes in notion", isFavourite: true, date: Date(), noOfMeetsAttended: 5),

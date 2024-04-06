@@ -6,47 +6,62 @@
 //
 
 import SwiftUI
-import SwiftData
+import Firebase
+import FirebaseCore
+import FirebaseFirestore
+import FirebaseFirestoreSwift
+import FirebaseAuth
+import GoogleSignInSwift
+
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        FirebaseApp.configure()
+        Auth.auth()
+//        Auth.auth().useEmulator(withHost:"localhost", port:9099)
+//        let settings = Firestore.firestore().settings
+//        settings.host = "127.0.0.1:8080"
+//        settings.cacheSettings = MemoryCacheSettings()
+//        settings.isSSLEnabled = false
+//        Firestore.firestore().settings = settings
+        return true
+    }
+}
+
 
 @main
 struct iOS_App_Dev_KeemeApp: App {
-    let container: ModelContainer
+    @State var showSignInView = false
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     var body: some Scene {
         WindowGroup {
-            ContentView()
-        }
-        .modelContainer(container)
-//        .modelContainer(for: User.self)
-//        .modelContainer(for: KeemeSpace.self)
-        
-        
-    }
+            TabView {
+                HomeView(showSignInView: $showSignInView)
+                    .tabItem {
+                        Image(systemName: "house")
+                        Text("Home")
+                    }
+                
+                ScheduleView(showSignInView: $showSignInView)
+                    .tabItem { Label("Schedule", systemImage: "calendar") }
+                    
+                
+                FavouritesView(showSignInView: $showSignInView)
+                    .tabItem { Label("Favourites", systemImage: "star") }
+                    
 
-//    init() {
-//        let schema = Schema([Student.self,Meeting.self,
-//                             StudentMeeting.self,
-//                             FavoriteStudents.self,
-//                             FavoriteMeetings.self])
-//        let config = ModelConfiguration("Student", schema: schema)
-//        do {
-//            container = try ModelContainer(for: schema, configurations: config)
-//        } catch {
-//            fatalError("Could not configure the container")
-//        }
-//        
-//        print(URL.applicationSupportDirectory.path(percentEncoded: false))
-//    }
-    
-    init() {
-        let schema = Schema([User.self
-                             /*Student.self, Meeting.self, StudentMeeting.self, FavoriteStudents.self, FavoriteMeetings.self*/])
-        let config = ModelConfiguration("KeemeApp",schema: schema)
-        do {
-            container = try ModelContainer(for: schema, configurations: config)
-        } catch {
-            fatalError("Could not configure the container")
-        }
-        print(URL.applicationSupportDirectory.path(percentEncoded: false))
-    }
+                
+                SettingsView(showSignInView: $showSignInView)
+                    .tabItem {
+                        Image(systemName: "person.fill")
+                        Text("Profile")
+                    }
+            }.accentColor(.purpleSet)
+                .background(Color.white) 
+                .onAppear {
+                            UITabBar.appearance().barTintColor = UIColor.white // Set the background color of the tab bar
+                        }
 
+        }
+    }
 }

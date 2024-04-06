@@ -1,20 +1,27 @@
 import SwiftUI
 
 struct ContentView: View {
-    @AppStorage("log_Status") var log_Status: Bool =  false
+    @Binding var showSignInView: Bool
     var body: some View {
         Group {
-            if log_Status{
-                MainTabView()
+            TabView {
+                HomeView(showSignInView: $showSignInView)
+                    .tabItem {
+                        Image(systemName: "house")
+                        Text("Home")
+                    }
+                SettingsView(showSignInView: $showSignInView)
+                    .tabItem {
+                        Image(systemName: "gear")
+                        Text("settings")
+                    }
             }
-            else {
-                Logo1()
-            }
+            
         }
     }
 }
 #Preview {
-    ContentView()
+    ContentView(showSignInView: .constant(false))
 }
 
 //import SwiftUI

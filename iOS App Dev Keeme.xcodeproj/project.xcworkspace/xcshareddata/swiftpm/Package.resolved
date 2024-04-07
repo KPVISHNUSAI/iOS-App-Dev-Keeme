@@ -3,7 +3,7 @@
     {
       "identity" : "stream-video-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/GetStream/stream-video-swift.git",
+      "location" : "https://github.com/GetStream/stream-video-swift",
       "state" : {
         "revision" : "323359995b3519828428e21d6029ff830f537153",
         "version" : "0.5.3"

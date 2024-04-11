@@ -10,6 +10,10 @@ final class ScheduleViewModel: ObservableObject {
 
     @Published private(set) var creatorDetails: [String: DBUser] = [:]
     
+    func getUserDetails(userId: String) async throws {
+        let user = try await UserManager.shared.getUser(userId: userId)
+    }
+    
     func loadCurrentUser() async throws {
         let authDataResult = try AuthenticationManager.shared.getAuthenticatedUser()
         self.user = try await UserManager.shared.getUser(userId: authDataResult.uid)
@@ -107,147 +111,176 @@ final class ScheduleViewModel: ObservableObject {
 struct ScheduleView: View {
     @Binding var showSignInView: Bool
     @StateObject private var viewModel = ScheduleViewModel()
+    let gradient = LinearGradient(colors: [Color.purpleSet, Color.gray], startPoint: .top, endPoint: .bottom)
     
     var body: some View {
-        ZStack{
+        
             NavigationStack {
-                VStack{
-                    List{
-                        Section("Your Keemespaces") {
-                            ForEach(viewModel.createdKeemeSpaces, id: \.keemeId) { keemespace in
-                                Section(header: EmptyView()){
-                                    NavigationLink(destination: DetailedView(details: keemespace)){
-                                        HStack {
-                                            if let user = viewModel.user {
-                                                if let photoUrlString = user.photoUrl, let photoUrl = URL(string: photoUrlString) {
-                                                    AsyncImage(url: photoUrl) { image in
-                                                        image
-                                                            .resizable()
-                                                            .aspectRatio(contentMode: .fill)
-                                                            .frame(width: 30, height: 30)
-                                                            .clipShape(Circle())
-                                                    } placeholder: {
-                                                        Image(systemName: "person.circle")
-                                                            .font(.system(size: 30))
-                                                            .foregroundColor(.gray)
-                                                    }
-                                                } else {
-                                                    Image(systemName: "person.circle")
-                                                        .font(.system(size: 30))
-                                                        .foregroundColor(.gray)
-                                                }
-                                                
-                                            }
-                                            
-                                            VStack(alignment: .leading){
-                                                Text(keemespace.sessionName)
-                                                    .font(.headline)
-                                                Text(keemespace.description)
-                                                    .foregroundColor(.gray)
-                                                    .font(.caption)
-                                                    .lineLimit(1)
-                                                    .truncationMode(.tail)
-                                                
-                                                Text("Start: \(viewModel.formattedDate(from: keemespace.startTime))")
-                                                    .font(.caption)
-                                                    .foregroundColor(.purple)
-                                                Text("End: \(viewModel.formattedDate(from: keemespace.endTime))")
-                                                    .font(.caption)
-                                                    .foregroundColor(.purple)
-
-                                            }
-                                            
-                                            
-                                        }
-                                    }.swipeActions {
-                                        Button("Delete") {
-                                            print("Delete")
-                                        }
-                                        .tint(.red)
-                                    }
-
-                                }
-                                                                
-                            }
-                        }
+                ZStack{
+                    gradient.opacity(0.5).ignoresSafeArea()
+                    
+                    ScrollView {
                         
-                        Section("Notifications"){
-                            ForEach(viewModel.joinRequestsForCreator, id: \.id) { request in
-                                HStack{
-                                    Text("Join request from: \(request.userID)")
-                                    
-                                    Spacer()
-                                    HStack{
-                                        Button(action: {
-                                            Task {
-                                                    do {
-                                                        try await viewModel.respondToJoinRequest(id: request.id, keemeId: request.keemeId , userID: request.userID, status: "accepted")
-                                                        print("\(request.status)")
-                                                    } catch {
-                                                        print("Error accepting join request: \(error)")
+                        
+                        VStack(alignment: .leading){
+                                Section("Your Keemespaces") {
+                                    ForEach(viewModel.createdKeemeSpaces, id: \.keemeId) { keemespace in
+                                            NavigationLink(destination: DetailedView(details: keemespace)){
+                                                HStack {
+                                                    if let user = viewModel.user {
+                                                        if let photoUrlString = user.photoUrl, let photoUrl = URL(string: photoUrlString) {
+                                                            AsyncImage(url: photoUrl) { image in
+                                                                image
+                                                                    .resizable()
+                                                                    .aspectRatio(contentMode: .fill)
+                                                                    .frame(width: 30, height: 30)
+                                                                    .clipShape(Circle())
+                                                            } placeholder: {
+                                                                Image(systemName: "person.circle")
+                                                                    .font(.system(size: 30))
+                                                                    .foregroundColor(.white)
+                                                                    .padding()
+                                                            }
+                                                        } else {
+                                                            Image(systemName: "person.circle")
+                                                                .font(.system(size: 30))
+                                                                .foregroundColor(.white)
+                                                                .padding()
+                                                        }
+                                                        
                                                     }
+                                                    
+                                                    
+                                                    
+                                                    VStack(alignment: .leading){
+                                                        Text(keemespace.sessionName)
+                                                            .font(.headline)
+                                                            .foregroundColor(.white)
+                                                            .fontWeight(.bold)
+                                                        Text(keemespace.description)
+                                                            .foregroundColor(.white)
+                                                            .font(.caption)
+                                                            .lineLimit(1)
+                                                            .truncationMode(.tail)
+                                                        
+                                                        Text("Start: \(viewModel.formattedDate(from: keemespace.startTime))")
+                                                            .font(.caption)
+                                                            .foregroundColor(.white)
+                                                        Text("End: \(viewModel.formattedDate(from: keemespace.endTime))")
+                                                            .font(.caption)
+                                                            .foregroundColor(.white)
+
+                                                    }
+                                                    Spacer()
+                                                    
+                                                    
+                                                }.padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12)) // Adjust padding as needed
+                                                    .background(Color.purpleSet.opacity(0.5).edgesIgnoringSafeArea(.all))
+                                                    .cornerRadius(10) // Apply corner radius
+                                                    .shadow(radius: 5)
+                                                    .overlay(
+                                                        RoundedRectangle(cornerRadius: 10)
+                                                            .stroke(Color.purpleSet, lineWidth: 1) // Adjust the color and width of the border
+                                                    )
+                                            }.swipeActions {
+                                                Button("Delete") {
+                                                    print("Delete")
                                                 }
-                                        }, label: {
-                                            Text(request.status == "accepted" ? "Accept" : "Accepted")
-                                                .foregroundColor(.green)
-                                                .cornerRadius(2)
+                                                .tint(.red)
+                                            }
+
+                                        
+                                                                        
+                                    }
+                                }
+                                
+                                Section("Notifications"){
+                                    ForEach(viewModel.joinRequestsForCreator, id: \.id) { request in
+                                        HStack{
+                                            Text("Join request from: \(request.userID)")
                                             
-                                        })
-                                        Button(action: {
-                                            Task {
-                                                    do {
-                                                        try await viewModel.respondToJoinRequest(id: request.id, keemeId: request.keemeId , userID: request.userID, status: "rejected")
-                                                    } catch {
-                                                        print("Error accepting join request: \(error)")
-                                                    }
-                                                }
-                                        }, label: {
-                                            Text("Reject")
-                                                .foregroundColor(.red)
-                                                .cornerRadius(2)
-                                        })
+                                            Spacer()
+                                            HStack{
+                                                Button(action: {
+                                                    Task {
+                                                            do {
+                                                                try await viewModel.respondToJoinRequest(id: request.id, keemeId: request.keemeId , userID: request.userID, status: "accepted")
+                                                                print("\(request.status)")
+                                                            } catch {
+                                                                print("Error accepting join request: \(error)")
+                                                            }
+                                                        }
+                                                }, label: {
+                                                    Text(request.status == "accepted" ? "Accept" : "Accepted")
+                                                        .foregroundColor(.green)
+                                                        .cornerRadius(2)
+                                                    
+                                                })
+                                                Button(action: {
+                                                    Task {
+                                                            do {
+                                                                try await viewModel.respondToJoinRequest(id: request.id, keemeId: request.keemeId , userID: request.userID, status: "rejected")
+                                                            } catch {
+                                                                print("Error accepting join request: \(error)")
+                                                            }
+                                                        }
+                                                }, label: {
+                                                    Text("Reject")
+                                                        .foregroundColor(.red)
+                                                        .cornerRadius(2)
+                                                })
+                                                
+                                            }
+                                        }.buttonStyle(.bordered)
+                                        
+                                        // Add more UI elements to display information about the join request as needed
+                                        
+                                        
+
                                         
                                     }
-                                }.buttonStyle(.bordered)
+                                    
+                                }
                                 
-                                // Add more UI elements to display information about the join request as needed
                                 
+                        
                                 
+                            
+                                .navigationTitle("Schedule")
+                                .toolbar {
+                                    ToolbarItem(placement: .navigationBarTrailing) {
+                                        NavigationLink(destination: CreateKeemespaceView(), label: {
+                                            Image(systemName: "plus")
+                                                .font(.title)
+                                        })
+                                    }
+                                }
 
-                                
+                        }.padding()
+                            
+                            .task {
+                                try? await viewModel.loadCurrentUser()
+                                try? await viewModel.fetchCreatedKeemeSpaces()
+                                try? await viewModel.fetchAllKeemeSpaces()
+                                try? await viewModel.fetchCreatorDetails()
+                                try? await viewModel.fetchJoinRequestsForCreator()
                             }
                             
-                        }
-                        
-                        
-                    } .listStyle(.grouped)
-                        .listSectionSpacing(.compact)
-                        .task {
-                            try? await viewModel.loadCurrentUser()
-                            try? await viewModel.fetchCreatedKeemeSpaces()
-                            try? await viewModel.fetchAllKeemeSpaces()
-                            try? await viewModel.fetchCreatorDetails()
-                            try? await viewModel.fetchJoinRequestsForCreator()
-                        }
-                    
-                        .navigationTitle("Schedule")
-                        .toolbar {
-                            ToolbarItem(placement: .navigationBarTrailing) {
-                                NavigationLink(destination: CreateKeemespaceView(), label: {
-                                    Image(systemName: "plus")
-                                        .font(.title)
-                                })
-                            }
-                        }
+                            
 
+                    }
                 }
-                        }
+                
+                
+            }
             .onAppear(){
                 let authUser = try? AuthenticationManager.shared.getAuthenticatedUser()
                 self.showSignInView = authUser == nil
             }
+            
+            
 
-        }
+        
     }
     
 }
@@ -265,117 +298,129 @@ struct DetailedView: View {
     }
     
     var body: some View {
-        VStack {
-            HStack(alignment: .center) {
-                if let creator = viewModel.creatorDetails[details.keemeId] {
-                    if let photoUrlString = creator.photoUrl, let photoUrl = URL(string: photoUrlString) {
-                        AsyncImage(url: photoUrl) { image in
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 100, height: 100)
-                                .clipShape(Circle())
-                        } placeholder: {
+        ZStack{
+            VStack {
+                HStack(alignment: .center) {
+                    if let creator = viewModel.creatorDetails[details.keemeId] {
+                        
+                        if let photoUrlString = creator.photoUrl, let photoUrl = URL(string: photoUrlString) {
+                            AsyncImage(url: photoUrl) { image in
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 100, height: 100)
+                                    .clipShape(Circle())
+                                Text("\(creator.firstName ?? "Friend")")
+                            } placeholder: {
+                                Image(systemName: "person.circle")
+                                    .font(.system(size: 100))
+                                    .foregroundColor(.white)
+                                Text("\(creator.firstName ?? "Friend")")
+                            }
+                        } else {
                             Image(systemName: "person.circle")
                                 .font(.system(size: 100))
-                                .foregroundColor(.gray)
+                                .foregroundColor(.white)
+                            Text("\(creator.firstName ?? "Friend")")
                         }
                     } else {
                         Image(systemName: "person.circle")
                             .font(.system(size: 100))
-                            .foregroundColor(.gray)
+                            .foregroundColor(.white)
+                        
                     }
-                } else {
-                    Image(systemName: "person.circle")
-                        .font(.system(size: 100))
-                        .foregroundColor(.gray)
                 }
-            }
-            .padding()
-            
-            Divider()
-            
-            VStack(alignment: .leading, spacing: 8) {
-                if let creator = viewModel.creatorDetails[details.keemeId] {
-                    Text("Creator Name: \(creator.userId)")
-                        .font(.headline)
-                } else {
-                    Text("Creator Name: Loading...")
-                        .font(.headline)
-                }
-                Text("Session Name: \(details.sessionName)")
-                    .font(.body)
-                Text("Description: \(details.description)")
-                    .font(.body)
-                Text("Start: \(viewModel.formattedDate(from: details.startTime))")
-                    .font(.body)
-                Text("End: \(viewModel.formattedDate(from: details.endTime))")
-                    .font(.body)
-                Text("Creator ID: \(details.creatorID)")
-                    .font(.body)
-                if let user = viewModel.user {
-                    if details.creatorID != user.userId {
-                        HStack{
-                            Button(action: {
-                                Task {
-                                    do {
-                                        // Call the requestToJoin function
-                                        try await viewModel.requestToJoin(keemeId: details.keemeId)
-                                        isRequested = true
-                                    } catch {
-                                        // Handle any errors
-                                        print("Error requesting to join keemespace: \(error)")
-                                    }
-                                }
-                            }) {
-                                Text(isRequested ? "Requested": "Request")
-                                    .font(.headline)
-                                    .foregroundColor(.white)
-                                    .padding()
-                                    .background(Color.purple)
-                                    .cornerRadius(10)
-                            }
+                .padding()
+                
+                Divider()
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    if let creator = viewModel.user {
+                        Text("Creator Name: \(creator.firstName ?? "Unknown")")
+                            .font(.headline)
                             
-                            Button(action: {
-                                Task {
-                                    do {
-                                        // Call the requestToJoin function
-                                        try await fviewModel.fetchAllFavorites()
-                                        isFavourite = !isFavourite
-                                    } catch {
-                                        // Handle any errors
-                                        
-                                        print("Error requesting to join keemespace: \(error)")
+                    }
+                    Text("Session Name: \(details.sessionName)")
+                        .font(.body)
+                    Text("Description: \(details.description)")
+                        .font(.body)
+                    Text("Start: \(viewModel.formattedDate(from: details.startTime))")
+                        .font(.body)
+                    Text("End: \(viewModel.formattedDate(from: details.endTime))")
+                        .font(.body)
+                    Text("Creator ID: \(details.creatorID)")
+                        .font(.body)
+                    if let user = viewModel.user {
+                        if details.creatorID != user.userId {
+                            HStack{
+//                                Spacer()
+                                Button(action: {
+                                    Task {
+                                        do {
+                                            // Call the requestToJoin function
+                                            try await viewModel.requestToJoin(keemeId: details.keemeId)
+                                            isRequested = true
+                                        } catch {
+                                            // Handle any errors
+                                            print("Error requesting to join keemespace: \(error)")
+                                        }
                                     }
-                                }
+                                }) {
+                                    Text(isRequested ? "Requested": "Request")
+                                        .font(.headline)
+                                        
+                                        .foregroundColor(.white)
+                                        .fontWeight(.bold)
+                                        .cornerRadius(10)
+                                }.buttonStyle(.borderedProminent)
+                                    
+//                                Spacer()
                                 
-                            }, label: {
-                                HStack{
-                                    Text(isFavourite ? "Added to Favourites" : "Add to Favourites")
-                                    isFavourite ? Image(systemName: "star.fill").foregroundColor(.yellow) : Image(systemName: "star").foregroundColor(.yellow)
-                                }
-                            })
-                                
+//                                Button(action: {
+//                                    Task {
+//                                        do {
+//                                            // Call the requestToJoin function
+//                                            try await fviewModel.addToFav(userId: user.userId, favouriteUserId: details.creatorID)
+//                                            isFavourite = !isFavourite
+//                                            print("Added to favourites")
+//                                        } catch {
+//                                            // Handle any errors
+//                                            
+//                                            print("Error requesting to join keemespace: \(error)")
+//                                        }
+//                                    }
+//                                    
+//                                }, label: {
+//                                    HStack{
+//                                        Text(isFavourite ? "Added to Favourites" : "Add to Favourites")
+//                                        isFavourite ? Image(systemName: "star.fill").foregroundColor(.yellow) : Image(systemName: "star").foregroundColor(.yellow)
+//                                    }
+//                                }).buttonStyle(.borderedProminent)
+                                    
+//                                Spacer()
+                            }.padding(.top, 10)
+                            
 
                         }
-                        
-
                     }
-                }
+                    
+                    
+                }.padding()
                 
                 
+                Spacer()
             }
-            .padding()
+            .background(Color.purpleSet.opacity(0.5).edgesIgnoringSafeArea(.all))
+            .cornerRadius(0)
+            .shadow(radius: 5)
             
-            Spacer()
+            .task {
+                try? await viewModel.loadCurrentUser()
+            }
+
         }
-        .background(Color.white)
-        .cornerRadius(20)
-        .shadow(radius: 5)
-        .padding()
-        .task {
-            try? await viewModel.loadCurrentUser()
-        }
+            
+        
     }
 }
 
@@ -383,10 +428,5 @@ struct DetailedView: View {
 struct ScheduleView_Previews: PreviewProvider {
     static var previews: some View {
         ScheduleView(showSignInView: .constant(false))
-        
     }
 }
-
-
-
-

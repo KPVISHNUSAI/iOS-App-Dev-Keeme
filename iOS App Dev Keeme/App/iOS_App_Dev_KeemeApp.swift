@@ -33,6 +33,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct iOS_App_Dev_KeemeApp: App {
     @State var showSignInView = false
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject private var authenticationViewModel = AuthenticationViewModel()
     var body: some Scene {
         WindowGroup {
             TabView {
@@ -41,27 +42,25 @@ struct iOS_App_Dev_KeemeApp: App {
                         Image(systemName: "house")
                         Text("Home")
                     }
-                
+                    
+                    
                 ScheduleView(showSignInView: $showSignInView)
                     .tabItem { Label("Schedule", systemImage: "calendar") }
-                    
                 
-                FavouritesView(showSignInView: $showSignInView)
-                    .tabItem { Label("Favourites", systemImage: "star") }
+//                FavouritesView(showSignInView: $showSignInView)
+//                    .tabItem { Label("Favourites", systemImage: "star") }
                     
-
-                
                 SettingsView(showSignInView: $showSignInView)
                     .tabItem {
                         Image(systemName: "person.fill")
                         Text("Profile")
                     }
+                    .background(Color.purple)
             }.accentColor(.purpleSet)
-                .background(Color.white) 
-                .onAppear {
-                            UITabBar.appearance().barTintColor = UIColor.white // Set the background color of the tab bar
-                        }
-
+                
+            .onAppear {
+                UITabBar.appearance().barTintColor = UIColor.white // Set the background color of the tab bar
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ final class ProfileViewModel: ObservableObject {
     @Published private(set) var createdKeemeSpaces: [Keemespace] = []
     @Published private(set) var allKeemeSpaces: [Keemespace] = []
     
+    
     func loadCurrentUser() async throws {
         let authDataResult = try AuthenticationManager.shared.getAuthenticatedUser()
         self.user = try await UserManager.shared.getUser(userId: authDataResult.uid)
@@ -108,6 +109,11 @@ struct HomeView: View {
     @Binding var showSignInView: Bool
     @Environment(\.colorScheme) var colorScheme
     @State private var isVideoCall = false
+    @State private var isFirstLogin = true
+    @State private var showUserDetailsForm = false
+    @State private var searchTerm = ""
+    let staticContentHeight: CGFloat = 200
+    
     let intrestsOptions: [String] = ["Coding", "Maths", "Physics"]
     
     private func intrestIsSelected(text: String) -> Bool {
@@ -115,219 +121,243 @@ struct HomeView: View {
     }
     
     var body: some View {
+        let gradient = LinearGradient(colors: [Color.purpleSet, Color.gray], startPoint: .top, endPoint: .bottom)
         
-        ZStack {
             if !showSignInView {
                 NavigationStack{
-                    HStack{
-                        if let user = viewModel.user {
-                            Text("Hello \(user.userId)")
-                                .font(.title)
-                                .lineLimit(1)
-                                .truncationMode(.tail)
-                            Spacer()
-                            if let photoUrlString = user.photoUrl, let photoUrl = URL(string: photoUrlString) {
-                                AsyncImage(url: photoUrl) { image in
-                                    image
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(width: 30, height: 30)
-                                        .clipShape(Circle())
-                                } placeholder: {
-                                    Image(systemName: "person.circle")
-                                        .font(.system(size: 30))
-                                        .foregroundColor(.gray)
+                    ZStack {
+                        gradient.opacity(0.5).ignoresSafeArea()
+                        VStack{
+                            HStack{
+                                if let user = viewModel.user {
+                                    Text("Hello \(user.firstName ?? "Friend")")
+                                        .font(.title)
+                                        .fontWeight(.bold)
+                                        .lineLimit(1)
+                                        .truncationMode(.tail)
+                                    Spacer()
+                                    if let photoUrlString = user.photoUrl, let photoUrl = URL(string: photoUrlString) {
+                                        AsyncImage(url: photoUrl) { image in
+                                            image
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                                .frame(width: 40, height: 40)
+                                                .clipShape(Circle())
+                                        } placeholder: {
+                                            Image(systemName: "person.circle")
+                                                .font(.system(size: 40))
+                                                .foregroundColor(.gray)
+                                        }
+                                    } else {
+                                        Image(systemName: "person.circle")
+                                            .font(.system(size: 40))
+                                            .foregroundColor(.gray)
+                                    }
+                                    
                                 }
-                            } else {
-                                Image(systemName: "person.circle")
-                                    .font(.system(size: 30))
-                                    .foregroundColor(.gray)
+                                
                             }
+                            .padding()
+    //                        .background(Color.purpleSet.opacity(0.5).edgesIgnoringSafeArea(.all))
                             
-                        }
-                        
-                    }.padding()
-                    
-
-                    ScrollView{
-                        VStack(alignment: .leading){
-                            
-
-                        
-                            Text("Upcoming Schedule")
-                                .font(.subheadline)
-                            if let firstKeemeSpace = viewModel.createdKeemeSpaces.first {
-                                 
-                                    NavigationLink(destination: DetailedView(details: firstKeemeSpace)){
-                                        HStack {
-                                            if let user = viewModel.user {
-                                                if let photoUrlString = user.photoUrl, let photoUrl = URL(string: photoUrlString) {
-                                                    AsyncImage(url: photoUrl) { image in
-                                                        image
-                                                            .resizable()
-                                                            .aspectRatio(contentMode: .fill)
-                                                            .frame(width: 30, height: 30)
-                                                            .clipShape(Circle())
-                                                            .padding()
-                                                    } placeholder: {
-                                                        Image(systemName: "person.circle")
-                                                            .font(.system(size: 30))
-                                                            .foregroundColor(.gray)
-                                                            .padding()
+                            ScrollView{
+                                VStack(alignment: .leading){
+                                    Text("Upcoming Schedule")
+                                        .font(.subheadline)
+                                        .fontDesign(.rounded)
+                                    if let firstKeemeSpace = viewModel.createdKeemeSpaces.first {
+                                         
+                                            NavigationLink(destination: DetailedView(details: firstKeemeSpace)){
+                                                HStack {
+                                                    if let user = viewModel.user {
+                                                        if let photoUrlString = user.photoUrl, let photoUrl = URL(string: photoUrlString) {
+                                                            AsyncImage(url: photoUrl) { image in
+                                                                image
+                                                                    .resizable()
+                                                                    .aspectRatio(contentMode: .fill)
+                                                                    .frame(width: 30, height: 30)
+                                                                    .clipShape(Circle())
+                                                                    .padding()
+                                                            } placeholder: {
+                                                                Image(systemName: "person.circle")
+                                                                    .font(.system(size: 30))
+                                                                    .foregroundColor(.gray)
+                                                                    .padding()
+                                                            }
+                                                        } else {
+                                                            Image(systemName: "person.circle")
+                                                                .font(.system(size: 30))
+                                                                .foregroundColor(.gray)
+                                                                .padding()
+                                                        }
+                                                        
                                                     }
-                                                } else {
-                                                    Image(systemName: "person.circle")
-                                                        .font(.system(size: 30))
-                                                        .foregroundColor(.gray)
-                                                        .padding()
+                                                    
+                                                    VStack(alignment: .leading) {
+                                                        
+                                                        Text(firstKeemeSpace.sessionName)
+                                                            .font(.title3)
+                                                            .fontWeight(.bold)
+                                                            .foregroundColor(.white)
+                                                            
+                                                        Text(firstKeemeSpace.description)
+                                                            .foregroundColor(.white)
+                                                            .font(.caption)
+                                                            .lineLimit(1)
+                                                            .truncationMode(.tail)
+                                                            .fontWeight(.bold)
+                                                        
+                                                        Text("Start: \(viewModel.formattedDate(from: firstKeemeSpace.startTime))")
+                                                            .font(.caption)
+                                                            .foregroundColor(.white)
+                                                            .fontWeight(.bold)
+                                                        Text("End: \(viewModel.formattedDate(from: firstKeemeSpace.endTime))")
+                                                            .font(.caption)
+                                                            .foregroundColor(.white)
+                                                            .fontWeight(.bold)
+                                                    }
+                                                    
+        //                                            Button(action: {
+        //
+        //                                                Task{
+        //                                                    do {
+        //                                                        KeemeSpaceView(showSignInView: $showSignInView)
+        //
+        //                                                    } catch {
+        //                                                        // Handle any errors
+        //                                                        print("Error requesting to join keemespace: \(error)")
+        //                                                    }
+        //
+        //                                                }
+        //
+        //                                            }, label: {
+        //                                                Text("Join Now")
+        //                                            })
+        //                                            .buttonStyle(.borderedProminent)
+        //                                            .background(.purpleSet)
+        //                                            .cornerRadius(5)
+                                                    Spacer()
+                                                    
+                                                    Button{
+                                                        isVideoCall.toggle()
+                                                    }label: {
+                                                        Text("Join Now")
+                                                            .foregroundColor(.white)
+                                                            .fontWeight(.bold)
+                                                        
+                                                    }.fullScreenCover(isPresented: $isVideoCall, content: VideoCallApp.init)
+                                                        .buttonStyle(.borderedProminent)
+                                                        
+                                                    
+                                                    
+                                                }
+                                                .padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12)) // Adjust padding as needed
+                                                .background(Color.purpleSet.opacity(0.5).edgesIgnoringSafeArea(.all))
+                                                .cornerRadius(10) // Apply corner radius
+                                                .shadow(radius: 5)
+                                                .overlay(
+                                                    RoundedRectangle(cornerRadius: 10)
+                                                        .stroke(Color.purpleSet, lineWidth: 1) // Adjust the color and width of the border
+                                                )
+                                                
+                                            }
+
+                                    } else {
+                                        HStack{
+                                            VStack(alignment: .center){
+                                                Text("No schedules found")
+                                                    .foregroundStyle(.primary)
+                                            }
+                                            
+                                                
+                                            Spacer()
+                                        }.padding() // Adjust padding as needed
+                                            .background(Color.purpleSet.opacity(0.5).edgesIgnoringSafeArea(.all))
+                                            .cornerRadius(10) // Apply corner radius
+                                            .shadow(radius: 10)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 10)
+                                                    .stroke(Color.purpleSet.opacity(0.9), lineWidth: 1) // Adjust the color and width of the border
+                                                    
+                                            )
+                                    }
+                                        
+                                    VStack(alignment: .center) {
+                                        let chartData = ChartData(points: [80, 23, 54, 32, 12, 37, 100])
+                                        BarChartView(data: chartData, title: "Focus Metrics", style: Styles.barChartStyleNeonBlueDark, form: ChartForm.extraLarge)
+                                    }
+                                                                        
+                                    VStack(alignment: .leading) {
+                                        Text("Find the buddy")
+                                            .font(.largeTitle)
+                                            .fontWeight(.bold)
+                                            
+                                        VStack{
+                                            ForEach(viewModel.allKeemeSpaces, id: \.keemeId) { keemespace in
+                                                NavigationLink(destination: DetailedView(details: keemespace)){
+                                                    HStack{
+                                                        
+                                                        Circle()
+                                                            .fill(.black)
+                                                            .frame(width: 40, height: 40)
+                                                            .padding()
+                                                        
+                                                        VStack(alignment: .leading){
+                                                            Text(keemespace.sessionName)
+                                                                .font(.headline)
+                                                                .foregroundColor(.white)
+                                                            Text(keemespace.description)
+                                                                .foregroundColor(.white)
+                                                                .fontWeight(.bold)
+                                                                .font(.caption)
+                                                                .lineLimit(1)
+                                                                .truncationMode(.tail)
+                                                            
+                                                            Text("Start: \(viewModel.formattedDate(from: keemespace.startTime))")
+                                                                .font(.caption)
+                                                                .foregroundColor(.white)
+                                                            Text("End: \(viewModel.formattedDate(from: keemespace.endTime))")
+                                                                .font(.caption)
+                                                                .foregroundColor(.white)
+                                                        }
+                                                        Spacer()
+                                                    }.padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12)) // Adjust padding as needed
+                                                        .background(Color.purpleSet.opacity(0.5).edgesIgnoringSafeArea(.all))
+                                                        .cornerRadius(10) // Apply corner radius
+                                                        .shadow(radius: 5)
+                                                        .overlay(
+                                                            RoundedRectangle(cornerRadius: 10)
+                                                                .stroke(Color.purpleSet, lineWidth: 1) // Adjust the color and width of the border
+                                                        )
                                                 }
                                                 
                                             }
-                                            
-                                            VStack(alignment: .leading) {
-                                                
-                                                Text(firstKeemeSpace.sessionName)
-                                                    .font(.headline)
-                                                Text(firstKeemeSpace.description)
-                                                    .foregroundColor(.black)
-                                                    .font(.caption)
-                                                    .lineLimit(1)
-                                                    .truncationMode(.tail)
-                                                    .fontWeight(.bold)
-                                                
-                                                Text("Start: \(viewModel.formattedDate(from: firstKeemeSpace.startTime))")
-                                                    .font(.caption)
-                                                    .foregroundColor(.purple)
-                                                Text("End: \(viewModel.formattedDate(from: firstKeemeSpace.endTime))")
-                                                    .font(.caption)
-                                                    .foregroundColor(.purple)
-                                            }
-                                            
-//                                            Button(action: {
-//                                                
-//                                                Task{
-//                                                    do {
-//                                                        KeemeSpaceView(showSignInView: $showSignInView)
-//                                                        
-//                                                    } catch {
-//                                                        // Handle any errors
-//                                                        print("Error requesting to join keemespace: \(error)")
-//                                                    }
-//                                                    
-//                                                }
-//                                                
-//                                            }, label: {
-//                                                Text("Join Now")
-//                                            })
-//                                            .buttonStyle(.borderedProminent)
-//                                            .background(.purpleSet)
-//                                            .cornerRadius(5)
-                                            
-                                            Button{
-                                                isVideoCall.toggle()
-                                            }label: {
-                                                Text("Join Now").padding()
-                                            }.fullScreenCover(isPresented: $isVideoCall, content: VideoCallApp.init)
-                                                
-                                            Spacer()
-                                            
                                         }
-                                        .padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12)) // Adjust padding as needed
-                                        .background(Color.white) // Set background color
-                                        .cornerRadius(10) // Apply corner radius
-                                        .shadow(radius: 5)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 10)
-                                                .stroke(Color.purpleSet, lineWidth: 1) // Adjust the color and width of the border
-                                        )
+                                        
                                         
                                     }
-                                
-                                
-                                
-                            } else {
-                                HStack{
-                                    VStack(alignment: .center){
-                                        Text("No schedules found")
-                                    }
                                     
-                                        
-                                    Spacer()
-                                }.padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12)) // Adjust padding as needed
-                                    .background(Color.white) // Set background color
-                                    .cornerRadius(10) // Apply corner radius
-                                    .shadow(radius: 5)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .stroke(Color.purpleSet, lineWidth: 1) // Adjust the color and width of the border
-                                    )
+                                                                
+                                    
+                                    
+                            }.task {
+                                try? await viewModel.loadCurrentUser()
+                                try? await viewModel.fetchCreatedKeemeSpaces()
+                                try? await viewModel.fetchAllKeemeSpaces()
                             }
-                                
-                                
+                            .padding()
                             
-                            
-                            VStack(alignment: .center){
-                                let chartData = ChartData(points: [80, 23, 54, 32, 12, 37, 100])
-                                BarChartView(data: chartData, title: "Focus Metrics", style: Styles.barChartStyleNeonBlueDark, form: ChartForm.extraLarge)
-                                    
-                                    
-                            }
-                            
-                                
-                            Text("Find the buddy")
-                                .font(.title)
-                            
-                            VStack{
-                                ForEach(viewModel.allKeemeSpaces, id: \.keemeId) { keemespace in
-                                    NavigationLink(destination: DetailedView(details: keemespace)){
-                                        HStack{
-                                            
-                                            Circle()
-                                                .fill(.black)
-                                                .frame(width: 30, height: 30)
-                                            
-                                            VStack(alignment: .leading){
-                                                Text(keemespace.sessionName)
-                                                    .font(.headline)
-                                                Text(keemespace.description)
-                                                    .foregroundColor(.black)
-                                                    .fontWeight(.bold)
-                                                    .font(.caption)
-                                                    .lineLimit(1)
-                                                    .truncationMode(.tail)
-                                                
-                                                Text("Start: \(viewModel.formattedDate(from: keemespace.startTime))")
-                                                    .font(.caption)
-                                                    .foregroundColor(.purple)
-                                                Text("End: \(viewModel.formattedDate(from: keemespace.endTime))")
-                                                    .font(.caption)
-                                                    .foregroundColor(.purple)
-                                            }
-                                            Spacer()
-                                        }.padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12)) // Adjust padding as needed
-                                            .background(Color.white) // Set background color
-                                            .cornerRadius(10) // Apply corner radius
-                                            .shadow(radius: 5)
-                                            .overlay(
-                                                RoundedRectangle(cornerRadius: 10)
-                                                    .stroke(Color.purpleSet, lineWidth: 1) // Adjust the color and width of the border
-                                            )
-                                    }
-                                    
-                                }
-                            }
-                            
-                                                        
-                            
-                            
-                    }.task {
-                        try? await viewModel.loadCurrentUser()
-                        try? await viewModel.fetchCreatedKeemeSpaces()
-                        try? await viewModel.fetchAllKeemeSpaces()
-                    }
-                    .padding()
 
+                            }
+
+
+                        }
                     }
+                    
+//                    .background(Color.purpleSet.opacity(0.5).edgesIgnoringSafeArea(.all))
+                    
+                    
+                                        
                                             
                     //                    if let user = viewModel.user {
                     //                        Button(action:{
@@ -366,18 +396,27 @@ struct HomeView: View {
                     //                                .cornerRadius(10)
                     //                        }
                     //                    }
-                    Spacer()
+                    
+                }.fullScreenCover(isPresented: $showSignInView){
+                    NavigationStack{
+                        AuthenticationView(showSignInView: $showSignInView)
+                    }
+                }
+                .fullScreenCover(isPresented: $showUserDetailsForm) {
+                    UserDetailsFormView(completion: {
+                        // Handle completion of user details form
+                        showUserDetailsForm = false
+                    })
+                }
+                .refreshable {
+                    try? await viewModel.loadCurrentUser()
+                    try? await viewModel.fetchCreatedKeemeSpaces()
+                    try? await viewModel.fetchAllKeemeSpaces()
                 }
             }
-        }
-        .onAppear(){
-            let authUser = try? AuthenticationManager.shared.getAuthenticatedUser()
-            self.showSignInView = authUser == nil
-        }
-        .fullScreenCover(isPresented: $showSignInView){
-            NavigationStack{
-                AuthenticationView(showSignInView: $showSignInView)
-            }
+        
+        
+                
             
             
             
@@ -465,11 +504,17 @@ struct HomeView: View {
     //            }
     //        }
     //    }
-}
+//}
 //
+
+
+
+
+
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView(showSignInView: .constant(false))
+            
     }
 }

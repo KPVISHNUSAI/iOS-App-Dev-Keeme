@@ -13,7 +13,17 @@ import GoogleSignIn
 
 @MainActor
 final class AuthenticationViewModel: ObservableObject {
+    
     let signInAppleHelper = SignInAppleHelper()
+    
+    @Published var showUserDetailsForm = false
+        
+    func checkFirstTimeSignIn() async {
+        let user = try? await UserManager.shared.getCurrentUser()
+        if let user = user, user.detailsNotFilledOut() {
+            showUserDetailsForm = true
+        }
+    }
     
     func signInGoogle() async throws {
         let helper = SignInGoogleHelper()
@@ -91,8 +101,8 @@ struct AuthenticationView: View {
                 
                 LoginPage1(showSignInView: $showSignInView)
                 
-                Text("or")
-                Divider()
+//                Text("or")
+//                Divider()
                 
                 GoogleSignInButton(viewModel: GoogleSignInButtonViewModel(scheme: .dark, style: .wide, state: .normal)){
                     Task{
@@ -121,32 +131,34 @@ struct AuthenticationView: View {
                 })
                 .frame(height: 55)
                 
-                Button(action: {
-                    Task{
-                        do {
-                            try await viewModel.signInAnonymous()
-                            showSignInView = false
-                        } catch {
-                            print(error)
-                        }
-                    }
-                    
-                }, label: {
-                    Text("Sign In Anonymously")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(height: 55)
-                        .frame(maxWidth: .infinity)
-                        .background(Color.orange)
-                        .cornerRadius(10)
-                })
+//                Button(action: {
+//                    Task{
+//                        do {
+//                            try await viewModel.signInAnonymous()
+//                            showSignInView = false
+//                        } catch {
+//                            print(error)
+//                        }
+//                    }
+//                    
+//                }, label: {
+//                    Text("Sign In Anonymously")
+//                        .font(.headline)
+//                        .foregroundColor(.white)
+//                        .frame(height: 55)
+//                        .frame(maxWidth: .infinity)
+//                        .background(Color.orange)
+//                        .cornerRadius(10)
+//                })
                 
                 Spacer()
             }
             .padding()
             
-        }
-        .navigationTitle("KEEME")
+            
+        }.background(Color.purpleSet.opacity(0.5).edgesIgnoringSafeArea(.all))
+        
+        
     }
 }
 

@@ -108,14 +108,18 @@ final class KeemespaceManager {
     }
     
     func getKeemespaces(byCreatorId creatorId: String) async throws -> [Keemespace] {
-        let querySnapshot = try await keemeCollection.whereField("creatorID", isEqualTo: creatorId).getDocuments()
+        let currentDate = Date()
+        let query = keemeCollection.whereField("creatorID", isEqualTo: creatorId)
+        let querySnapshot = try await query.getDocuments()
         return try querySnapshot.documents.compactMap { document in
             try document.data(as: Keemespace.self)
         }
     }
     
     func getAllKeemespaces(except userId: String) async throws -> [Keemespace] {
-        let querySnapshot = try await keemeCollection.whereField("creatorID", isNotEqualTo: userId).getDocuments()
+        let currentDate = Date()
+        let query = keemeCollection.whereField("creatorID", isNotEqualTo: userId).whereField("startTime", isGreaterThanOrEqualTo: currentDate)
+        let querySnapshot = try await query.getDocuments()
         return try querySnapshot.documents.compactMap { document in
             try document.data(as: Keemespace.self)
         }
@@ -241,4 +245,11 @@ final class KeemespaceManager {
             return joinRequests
         }
 
+}
+
+
+extension DBUser {
+    func detailsNotFilledOut() -> Bool {
+        return firstName == nil || lastName == nil // Add more conditions if needed
+    }
 }

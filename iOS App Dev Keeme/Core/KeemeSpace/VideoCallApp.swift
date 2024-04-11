@@ -9,9 +9,9 @@ struct VideoCallApp: View {
 
     private var client: StreamVideo
     private let apiKey: String = "mmhfdzb5evj2" // The API key can be found in the Credentials section
-    private let userId: String = "Pre_Vizsla" // The User Id can be found in the Credentials section
-    private let token: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiUHJlX1ZpenNsYSIsImlzcyI6Imh0dHBzOi8vcHJvbnRvLmdldHN0cmVhbS5pbyIsInN1YiI6InVzZXIvUHJlX1ZpenNsYSIsImlhdCI6MTcxMTM1OTM4NiwiZXhwIjoxNzExOTY0MTkxfQ.gmrNyAzFNCYlbW6NIiLtlK985S4S39J-CuAeq082VZU" // The Token can be found in the Credentials section
-    private let callId: String = "jQZwek7hMmM8" // The CallId can be found in the Credentials section
+    private let userId: String = "Jacen_Solo" // The User Id can be found in the Credentials section
+    private let token: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiSmFjZW5fU29sbyIsImlzcyI6Imh0dHBzOi8vcHJvbnRvLmdldHN0cmVhbS5pbyIsInN1YiI6InVzZXIvSmFjZW5fU29sbyIsImlhdCI6MTcxMjgwNDcxNSwiZXhwIjoxNzEzNDA5NTIwfQ.VXSelvBt-CMxJ2tSuitjCFu8DJzgNrtgKcA991lOeBk" // The Token can be found in the Credentials section
+    private let callId: String = "xpoifmhZfGxR" // The CallId can be found in the Credentials section
 
     init() {
         let user = User(
@@ -34,7 +34,7 @@ struct VideoCallApp: View {
         NavigationStack {
             VStack {
                 if viewModel.call != nil {
-                    CallContainer(viewFactory: VideoCallCustomUI(), viewModel: viewModel)
+                    CallContainer(viewFactory: DefaultViewFactory.shared, viewModel:viewModel)
                 } else {
                     Text("loading...")
                 }

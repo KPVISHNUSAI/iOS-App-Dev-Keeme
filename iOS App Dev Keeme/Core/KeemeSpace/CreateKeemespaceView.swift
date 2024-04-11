@@ -18,32 +18,61 @@ struct CreateKeemespaceView: View {
     @State private var endTime = Date()
     @StateObject private var keemespaceModel = KeemespaceModel()
 //    @Environment(\.presentationMode) var presentationMode
-    
+    @Environment(\.colorScheme) var colorScheme
+    let gradient = LinearGradient(colors: [Color.purpleSet, Color.gray], startPoint: .top, endPoint: .bottom)
     var body: some View {
-            Form {
-                Section(header: Text("Session Details")) {
-                    TextField("Session Name", text: $sessionName)
-                    TextField("Description", text: $description)
-                    DatePicker("Date and Time", selection: $startTime, displayedComponents: [.date, .hourAndMinute])
-                    DatePicker("Date and Time", selection: $endTime, displayedComponents: [.date, .hourAndMinute])
-                    Button("Create Keemespace") {
-                        createKeemespace()
+        
+            ZStack{
+                gradient.opacity(0.5).ignoresSafeArea()
+                
+                    
+                        VStack{
+                                TextField("Session Name", text: $sessionName)
+                                .padding()
+                                .background(colorScheme == .dark ? Color.white.opacity(0.8) : Color.gray.opacity(0.8))
+                                .cornerRadius(10)
+                                .foregroundColor(Color.primary)
+                                
+                                TextField("Description", text: $description)
+                                .padding()
+                                .background(colorScheme == .dark ? Color.white.opacity(0.8) : Color.gray.opacity(0.8))
+                                .cornerRadius(10)
+                                .foregroundColor(Color.primary)
+                                
+                                DatePicker("Date and Time", selection: $startTime, displayedComponents: [.date, .hourAndMinute])
+                                
+                                .cornerRadius(10)
+                                .foregroundColor(Color.primary)
+                                DatePicker("Date and Time", selection: $endTime, displayedComponents: [.date, .hourAndMinute])
+                                
+                                .cornerRadius(10)
+                                .foregroundColor(Color.primary)
+                                Button("Create Keemespace") {
+                                    createKeemespace()
+                                }.padding()
+                                .buttonStyle(.borderedProminent)
+                            Spacer()
+                        }.padding()
+                        
+
+                    
+                    
+                    
+                                        
+                
+            }
+                .navigationTitle("Create Keemespace")
+                .onAppear {
+                    Task {
+                        // Load current user
+                        try? await keemespaceModel.loadCurrentUser()
                     }
-                    .buttonStyle(.borderedProminent)
-
                 }
-                
-                
-                                    
-            }
-            .navigationTitle("Create Keemespace")
-            .onAppear {
-                Task {
-                    // Load current user
-                    try? await keemespaceModel.loadCurrentUser()
-                }
-            }
 
+            
+        
+        
+            
         
     }
     

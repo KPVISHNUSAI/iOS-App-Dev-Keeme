@@ -156,6 +156,15 @@ final class FavouriteViewModel: ObservableObject {
         let favoriteUsers = try await UserManager.shared.getAllFavorites(userId: user.userId)
         self.favoriteUsers = favoriteUsers
     }
+    
+    func addToFav(userId : String, favouriteUserId: String) async throws {
+        guard let user = self.user else {
+            return
+        }
+        let _ = try await UserManager.shared.addToFavouriteUsers(userId: userId, favoriteUserId: favouriteUserId)
+        let favoriteUsers = try await UserManager.shared.getAllFavorites(userId: user.userId)
+        self.favoriteUsers = favoriteUsers
+    }
 }
 
 struct FavouritesView: View {
@@ -185,7 +194,12 @@ struct FavouritesView: View {
                     }
                 }
             }
+            
+        }.refreshable {
+            try? await viewModel.loadCurrentUser()
+            try? await viewModel.fetchAllFavorites()
         }
+        .background(Color.purpleSet.opacity(0.5).edgesIgnoringSafeArea(.all))
         .task {
             try? await viewModel.loadCurrentUser()
             try? await viewModel.fetchAllFavorites()

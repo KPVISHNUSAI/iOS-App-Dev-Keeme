@@ -52,13 +52,13 @@ struct FBCallControlsView: View {
             
             Spacer()
             
-            if !achievementsTabOpened {
-                ControlButton(systemName: "trophy.fill") {
-                    // Achievements button action
-                    self.achievementsTabOpened.toggle()
-                }
-            }
-            Spacer()
+//            if !achievementsTabOpened {
+//                ControlButton(systemName: "trophy.fill") {
+//                    // Achievements button action
+//                    self.achievementsTabOpened.toggle()
+//                }
+//            }
+//            Spacer()
             
             HangUpIconView(viewModel: viewModel)
             

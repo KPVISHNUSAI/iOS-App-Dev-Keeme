@@ -8,6 +8,8 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import FirebaseAuth
+import FirebaseStorage
 
 struct DBUser: Codable {
     let userId: String
@@ -29,8 +31,8 @@ struct DBUser: Codable {
         self.dateCreated = Date()
         self.isPremium = false
         self.interests = nil
-        self.firstName = nil
-        self.lastName = nil
+        self.firstName = auth.firstName
+        self.lastName = auth.lastName
         self.favourites = nil
     }
     
@@ -133,6 +135,37 @@ final class UserManager {
         userCollection.document(userId)
     }
     
+    func getCurrentUser() async throws -> DBUser? {
+        if let currentUser = Auth.auth().currentUser {
+            // User is currently authenticated
+            // You can fetch the user details from Firestore based on the currentUser.uid
+            // Here's a basic example assuming you have a Firestore document for each user
+            do {
+                let documentSnapshot = try await userDocument(userId: currentUser.uid).getDocument()
+                if let userData = documentSnapshot.data() {
+                    // Parse userData to create a DBUser object
+                    // Example:
+                    let user = DBUser(
+                        userId: currentUser.uid,
+                        firstName: userData["firstName"] as? String,
+                        lastName: userData["lastName"] as? String
+                        // Parse other user data fields
+                    )
+                    return user
+                } else {
+                    // User document not found
+                    return nil
+                }
+            } catch {
+                // Error fetching user document
+                throw error
+            }
+        } else {
+            // No user logged in
+            return nil
+        }
+    }
+    
     //    private let encoder: Firestore.Encoder = {
     //        let encoder = Firestore.Encoder()
     //        encoder.keyEncodingStrategy = .convertToSnakeCase
@@ -219,7 +252,7 @@ final class UserManager {
         ]
         try await userDocument(userId: userId).updateData(data)
     }
-    
+     
     func getAllFavorites(userId: String) async throws -> [DBUser] {
             let userDocument = userCollection.document(userId)
             let documentSnapshot = try await userDocument.getDocument()
@@ -241,4 +274,44 @@ final class UserManager {
             }
             return users
         }
+    
+    func updateUserPhotoUrl(userId: String, photoUrl: String) async throws {
+        let data: [String: Any] = [
+            DBUser.CodingKeys.photoUrl.rawValue: photoUrl
+        ]
+        try await userDocument(userId: userId).updateData(data)
+    }
+    
+    func uploadImageAndGetURL(image: UIImage, completion: @escaping (URL) -> Void) {
+        // Reference to the Firebase Storage bucket where you want to upload the image
+        let storageRef = Storage.storage().reference().child("profile_images").child("\(UUID().uuidString).jpg")
+        
+        // Convert UIImage to Data
+        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+            print("Failed to convert UIImage to Data")
+            return
+        }
+        
+        // Upload image data to Firebase Storage
+        let uploadTask = storageRef.putData(imageData, metadata: nil) { metadata, error in
+            guard let _ = metadata else {
+                print("Error uploading image:", error?.localizedDescription ?? "Unknown error")
+                return
+            }
+            
+            // Image uploaded successfully, get download URL
+            storageRef.downloadURL { url, error in
+                if let downloadURL = url {
+                    completion(downloadURL) // Pass the download URL to the completion handler
+                } else {
+                    print("Error getting download URL:", error?.localizedDescription ?? "Unknown error")
+                }
+            }
+        }
+        
+        // Observe the upload progress if needed
+        uploadTask.observe(.progress) { snapshot in
+            // Handle progress updates if needed
+        }
+    }
 }

@@ -10,21 +10,47 @@ import FirebaseAuth
 
 
 
+//struct AuthDataResultModel {
+//    let uid: String
+//    let email: String?
+//    let photoUrl: String?
+//    let isAnonymous: Bool
+//    
+//    
+//    init(user: User){
+//        self.uid = user.uid
+//        self.email = user.email
+//        self.photoUrl = user.photoURL?.absoluteString
+//        self.isAnonymous = user.isAnonymous
+//    }
+//}
+
 struct AuthDataResultModel {
     let uid: String
     let email: String?
     let photoUrl: String?
     let isAnonymous: Bool
-    
+    let firstName: String? // New property
+    let lastName: String? // New property
     
     init(user: User){
         self.uid = user.uid
         self.email = user.email
         self.photoUrl = user.photoURL?.absoluteString
         self.isAnonymous = user.isAnonymous
+        self.firstName = nil
+        self.lastName = nil
+    }
+    
+    init(user: User, firstName: String?, lastName: String?) {
+        self.uid = user.uid
+        self.email = user.email
+        self.photoUrl = user.photoURL?.absoluteString
+        self.isAnonymous = user.isAnonymous
+        self.firstName = firstName
+        self.lastName = lastName
     }
 }
-
 
 enum AuthProviderOptions: String {
     case email = "password"
@@ -38,6 +64,8 @@ enum AuthenticationError: Error {
     case confirmPasswordMismatch
     case invalidConfirmPassword
     case invalidUser
+    case noFirstName
+    case noLastName
 }
 
 
@@ -93,6 +121,20 @@ extension AuthenticationManager {
         let authDataResult = try await Auth.auth().createUser(withEmail: email, password: password)
         return AuthDataResultModel(user: authDataResult.user)
     }
+    
+    @discardableResult
+    func createUser(email: String, password: String, firstName: String?, lastName: String?) async throws -> AuthDataResultModel {
+        let authDataResult = try await Auth.auth().createUser(withEmail: email, password: password)
+        
+        // Update DBUser with firstName and lastName
+        let user = DBUser(auth: AuthDataResultModel(user: authDataResult.user, firstName: firstName, lastName: lastName))
+        
+        // Create user in the database
+        try await UserManager.shared.createNewUser(user: user)
+        
+        return AuthDataResultModel(user: authDataResult.user, firstName: firstName, lastName: lastName)
+    }
+
     
     @discardableResult
     func signInUser(email: String, password: String) async throws -> AuthDataResultModel {

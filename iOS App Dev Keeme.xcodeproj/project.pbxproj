@@ -89,6 +89,7 @@
 		0FDCC5052BB530A1009D33D6 /* VideoCallApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FDCC5042BB530A1009D33D6 /* VideoCallApp.swift */; };
 		0FDCC5072BB530CF009D33D6 /* VideoCallCustomUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FDCC5062BB530CF009D33D6 /* VideoCallCustomUI.swift */; };
 		0FDCC5092BBA76BC009D33D6 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FDCC5082BBA76BC009D33D6 /* NotificationService.swift */; };
+		0FDCC50B2BC26F0C009D33D6 /* UserDetailsFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FDCC50A2BC26F0C009D33D6 /* UserDetailsFormView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -144,6 +145,7 @@
 		0FDCC5042BB530A1009D33D6 /* VideoCallApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallApp.swift; sourceTree = "<group>"; };
 		0FDCC5062BB530CF009D33D6 /* VideoCallCustomUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallCustomUI.swift; sourceTree = "<group>"; };
 		0FDCC5082BBA76BC009D33D6 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		0FDCC50A2BC26F0C009D33D6 /* UserDetailsFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsFormView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -299,6 +301,7 @@
 			isa = PBXGroup;
 			children = (
 				0F10021C2B6CA8BB0050906E /* HomeView.swift */,
+				0FDCC50A2BC26F0C009D33D6 /* UserDetailsFormView.swift */,
 				0F10021E2B6CA8C30050906E /* IntroView.swift */,
 				0F1002202B6CA8CC0050906E /* Listings.swift */,
 				0F1002222B6CA8D20050906E /* PieChartView.swift */,
@@ -531,6 +534,7 @@
 				0F1002192B6CA8930050906E /* SettingsView.swift in Sources */,
 				0FDCC5032BB53083009D33D6 /* ParticipantsView.swift in Sources */,
 				0FDCC4FA2BB52EF6009D33D6 /*  FloatingParticipantView.swift in Sources */,
+				0FDCC50B2BC26F0C009D33D6 /* UserDetailsFormView.swift in Sources */,
 				0F10021F2B6CA8C30050906E /* IntroView.swift in Sources */,
 				0F1002332B6CA94D0050906E /* LoginPageModel.swift in Sources */,
 				0FDA2E312BAE02D000497380 /* SignInGoogleHelper.swift in Sources */,

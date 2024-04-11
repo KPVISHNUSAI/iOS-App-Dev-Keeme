@@ -690,12 +690,15 @@
 
 
 import SwiftUI
+import UIKit
+import FirebaseStorage
 
 @MainActor
 final class SettingsViewModel: ObservableObject {
     
     @Published var authProviders: [AuthProviderOptions] = []
     @Published var authUser: AuthDataResultModel? = nil
+    @Published var userPhotoUrl: String?
     
     func loadAuthProviders() {
         if let providers = try? AuthenticationManager.shared.getProviders() {
@@ -751,16 +754,66 @@ final class SettingsViewModel: ObservableObject {
         let password = "keeme2"
         self.authUser = try await AuthenticationManager.shared.linkEmail(email: email, password: password)
     }
+    
+    func updateUserProfileImage(imageUrl: String) {
+        self.userPhotoUrl = imageUrl
+    }
+    
+    
 }
 
 
 struct SettingsView: View {
     @StateObject private var viewModel = SettingsViewModel()
     @Binding var showSignInView: Bool
+    @State private var image: UIImage?
+    @State private var isShowingImagePicker = false
+    @State private var sourceType: UIImagePickerController.SourceType = .photoLibrary
     
     var body: some View {
+        
+        
         NavigationStack {
+            
             List {
+                Section("Personal Details"){
+                    VStack (alignment: .center){
+                        HStack{
+                            Spacer()
+                            if let pickedImage = image {
+                                
+                                Image(uiImage: pickedImage)
+                                    .resizable()
+//                                    .scaledToFit()
+                                    .frame(width: 100, height: 100)
+                                    .cornerRadius(50)
+                            } else {
+                                Button(action:{
+                                    sourceType = .photoLibrary
+                                    isShowingImagePicker.toggle()
+                                    
+                                }) {
+                                    Image(systemName: "photo")
+                                        .padding()
+                                        .foregroundColor(.white)
+                                        .background(Color.blue)
+                                        .clipShape(Circle())
+                                        .cornerRadius(100)
+                                    
+                                }
+                                .padding()
+                                .background(Color.blue)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                            }
+                            Spacer()
+                        }.sheet(isPresented: $isShowingImagePicker) {
+                            ImagePicker(sourceType: sourceType, selectedImage: $image)
+                        }
+                        
+                    }
+                    
+                }
                 Button("Logout") {
                     Task {
                         do {
@@ -884,6 +937,112 @@ extension SettingsView {
             Text("Create Account")
         }
     }
+}
+
+struct ImagePicker: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIImagePickerController
+    @StateObject private var viewModel = SettingsViewModel()
+    
+    var sourceType: UIImagePickerController.SourceType
+    @Binding var selectedImage: UIImage?
+    
+    func makeUIViewController(context: Context) -> UIImagePickerController {
+        let picker = UIImagePickerController()
+        picker.sourceType = sourceType
+        picker.delegate = context.coordinator
+        return picker
+    }
+    
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
+    
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(parent: self)
+    }
+    
+//    class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+//        let parent: ImagePicker
+//        
+//        init(parent: ImagePicker) {
+//            self.parent = parent
+//        }
+//        
+//        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+//            if let pickedImage = info[.originalImage] as? UIImage {
+//                parent.selectedImage = pickedImage
+//            }
+//            
+//            picker.dismiss(animated: true)
+//        }
+//    }
+    
+//    class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+//        let parent: ImagePicker
+//
+//        init(parent: ImagePicker) {
+//            self.parent = parent
+//        }
+//
+//        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+//            if let pickedImage = info[.originalImage] as? UIImage {
+//                // Upload the selected image to your storage service (e.g., Firebase Storage)
+//                // Get the download URL of the uploaded image
+//                // For demonstration purposes, let's assume you have a function `uploadImageAndGetURL(image:)` for uploading images
+//                parent.viewModel.uploadImageAndGetURL(image: pickedImage) { imageUrl in
+//                    // Update the user's profile image URL in the view model
+//                    parent.viewModel.updateUserProfileImage(imageUrl: imageUrl.absoluteString)
+//                }
+//            }
+//
+//            picker.dismiss(animated: true)
+//        }
+//    }
+    
+    class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+        let parent: ImagePicker
+
+        init(parent: ImagePicker) {
+            self.parent = parent
+        }
+
+//        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+//            if let pickedImage = info[.originalImage] as? UIImage {
+//                parent.selectedImage = pickedImage
+//                
+//                // Capture self explicitly as self within the closure
+//                UserManager.shared.uploadImageAndGetURL(image: pickedImage) { [self] result in
+//                    switch result {
+//                    case .success(let url):
+//                        // Handle success: you can use the URL to update the user's profile image
+//                        print("Image uploaded successfully. URL:", url.absoluteString)
+//                    case .failure(let error):
+//                        // Handle failure: log the error or display an alert to the user
+//                        print("Failed to upload image:", error.localizedDescription)
+//                    }
+//                }
+//            }
+//
+//            picker.dismiss(animated: true)
+//        }
+        
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            if let pickedImage = info[.originalImage] as? UIImage {
+                parent.selectedImage = pickedImage
+                
+                // Capture self explicitly as self within the closure
+                UserManager.shared.uploadImageAndGetURL(image: pickedImage){ url in
+                    self.parent.viewModel.updateUserProfileImage(imageUrl: url.absoluteString)
+                    print("Image uploaded successfully. URL:", url.absoluteString)
+                }
+                
+                
+            }
+
+            picker.dismiss(animated: true)
+        }
+
+    }
+
+
 }
 
 

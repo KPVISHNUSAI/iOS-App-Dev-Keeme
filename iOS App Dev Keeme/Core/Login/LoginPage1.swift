@@ -10,8 +10,16 @@ import SwiftUI
 final class SignInEmailViewModel: ObservableObject {
     @Published var email = ""
     @Published var password = ""
+    @Published var firstName = ""
+    @Published var lastName = ""
     
     func signUp(confirmPassword: String) async throws {
+        guard !firstName.isEmpty else {
+            throw AuthenticationError.noFirstName
+        }
+        guard !lastName.isEmpty else {
+            throw AuthenticationError.noLastName
+        }
         guard !email.isEmpty else {
             throw AuthenticationError.invalidEmail
         }
@@ -21,7 +29,7 @@ final class SignInEmailViewModel: ObservableObject {
         guard password == confirmPassword else {
             throw AuthenticationError.confirmPasswordMismatch
         }
-        let authDataResult = try await AuthenticationManager.shared.createUser(email: email, password: password)
+        let authDataResult = try await AuthenticationManager.shared.createUser(email: email, password: password, firstName: firstName, lastName: lastName)
         let user = DBUser(auth: authDataResult)
         try await UserManager.shared.createNewUser(user: user)
 
@@ -44,42 +52,99 @@ final class SignInEmailViewModel: ObservableObject {
 struct LoginPage1: View {
     @Binding var showSignInView: Bool
     @StateObject private var viewModel = SignInEmailViewModel()
+    @Environment(\.colorScheme) var colorScheme
     
     @State private var isRegistering = false
     @State private var confirmPassword = ""
-    
+    @State private var firstName = ""
+    @State private var lastName = ""
     // State variables to track validation
     @State private var isEmailValid = true
     @State private var isPasswordValid = true
     @State private var isConfirmPasswordValid = true
     @State private var isUserValid = true
+    @State private var isFlipped = false
     
     var body: some View {
         VStack{
-            Image("keeme")
-                .resizable()
-                .frame(width: 150, height: 120)
-                .padding()
-            Text("Keep Me Updated")
+            ZStack{
+                VStack{
+                    Text("KEEME")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .tracking(15)
+                        .foregroundStyle(.purpleSet)
+                        
+                    Image("keeme")
+                        .resizable()
+                        .frame(width: 150, height: 120)
+                        .padding()
+                        .shadow(radius: 10)
+                        .rotation3DEffect(
+                            .degrees(isFlipped ? 360 : 0),
+                            axis: (x: 0.0, y: 1.0, z: 0.0)
+                        )
+                        .animation(.easeInOut(duration: 1))
+                        .onAppear {
+                            Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
+                                withAnimation {
+                                    self.isFlipped.toggle()
+                                }
+                            }
+                        }
+                    
+                    Text("Keep Me Updated")
+                        .foregroundStyle(.white)
+                        .fontWeight(.bold)
+                }.padding()
+ 
+            }
             
+            if isRegistering {
+                TextField("Firstname...", text: $viewModel.firstName)
+                    .padding()
+                    .background(colorScheme == .dark ? Color.white.opacity(0.8) : Color.gray.opacity(0.8))
+
+                    .cornerRadius(10)
+                    .border(Color.red, width: isEmailValid ? 0 : 1) // Indicator for invalid email
+                    .foregroundColor(Color.primary)
+                
+                TextField("LastName", text: $viewModel.lastName)
+                    .padding()
+                    .background(colorScheme == .dark ? Color.white.opacity(0.8) : Color.gray.opacity(0.8))
+
+                    .cornerRadius(10)
+                    .border(Color.red, width: isEmailValid ? 0 : 1) // Indicator for invalid email
+                    .foregroundColor(Color.primary)
+
+
+            }
+                
             TextField("Email...", text: $viewModel.email)
                 .padding()
-                .background(Color.gray.opacity(0.4))
+                .background(colorScheme == .dark ? Color.white.opacity(0.8) : Color.gray.opacity(0.8))
+
                 .cornerRadius(10)
                 .border(Color.red, width: isEmailValid ? 0 : 1) // Indicator for invalid email
+                .foregroundColor(Color.primary)
             
             SecureField("Password...", text: $viewModel.password)
                 .padding()
-                .background(Color.gray.opacity(0.4))
+                .background(colorScheme == .dark ? Color.white.opacity(0.8) : Color.gray.opacity(0.8))
+
                 .cornerRadius(10)
                 .border(Color.red, width: isPasswordValid ? 0 : 1) // Indicator for invalid password
+                .foregroundColor(Color.primary)
+                
             
             if isRegistering {
                 SecureField("Confirm Password...", text: $confirmPassword)
                     .padding()
-                    .background(Color.gray.opacity(0.4))
+                    .background(colorScheme == .dark ? Color.white.opacity(0.8) : Color.gray.opacity(0.8))
+                    .foregroundColor(Color.primary)
                     .cornerRadius(10)
                     .border(Color.red, width: isConfirmPasswordValid ? 0 : 1) // Indicator for invalid confirm password
+                    
             }
             
             Button(action: {
@@ -137,7 +202,9 @@ struct LoginPage1: View {
                 Text(isRegistering ? "Sign In" : "Create an account")
                     .font(.headline)
             }
+            Spacer()
         }
+        
         
         
         

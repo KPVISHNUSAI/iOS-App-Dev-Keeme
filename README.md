@@ -1,7 +1,3 @@
-Here's an updated README file tailored to your project:
-
----
-
 # KEEME - Keep Me Updated
 
 **KEEME** (Keep Me Updated) is an iOS application designed to enhance collaborative studying. The app offers features such as buddy finding, personalized scheduling, task management, and shared celebrations, making the studying process more interactive and engaging.
